@@ -3,806 +3,1626 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Portfolio | Nouval</title>
+    <title>Portfolio | Nouval Lazuardy</title>
     <link rel="icon" type="image" href="img/ikonlink2.png">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
 
-    <!-- Google Web Fonts -->
+    <!-- Fonts Modern: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700&family=Rubik:wght@400;500&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Icon Font Stylesheet -->
+    <!-- Icons -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/lightbox/css/lightbox.min.css" rel="stylesheet">
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* === WARNA DASAR & TEMA === */
+        :root {
+            --bg-color: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #004aad;
+            --primary-glow: rgba(0, 74, 173, 0.2);
+            --card-bg: #ffffff;
+            --border-color: rgba(0,0,0,0.08);
+        }
 
-    <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+        .dark-mode {
+            --bg-color: #0f172a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #3b82f6;
+            --primary-glow: rgba(59, 130, 246, 0.3);
+            --card-bg: #1e293b;
+            --border-color: rgba(255,255,255,0.1);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            transition: all 0.4s ease;
+            overflow-x: hidden;
+            padding-bottom: 90px;
+            isolation: isolate;
+        }
+
+        a { text-decoration: none; }
+        p { line-height: 1.7; color: var(--text-muted); }
+        h1, h2, h3, h4, h5, h6 { font-weight: 700; color: var(--text-main); }
+
+        /* ========================================================== */
+        /* === PAGE REFRESH LOADER DINOSAURUS                       === */
+        /* ========================================================== */
+        #pageLoader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-color);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .dino-container {
+            text-align: center;
+            animation: dinoPulse 1s infinite alternate ease-in-out;
+        }
+        .dino-icon {
+            font-size: 4.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: inline-block;
+            animation: dinoHop 0.6s infinite alternate ease-in-out;
+        }
+        @keyframes dinoHop {
+            0% { transform: translateY(0) scaleY(0.95); }
+            100% { transform: translateY(-20px) scaleY(1.05); }
+        }
+        @keyframes dinoPulse {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        /* === FLOATING NAVBAR === */
+        .floating-nav {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--border-color);
+            padding: 12px 30px;
+            border-radius: 50px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            transition: all 0.3s ease;
+        }
+        .nav-link-custom {
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+        .nav-link-custom:hover { color: var(--primary); }
+        .nav-brand-img { height: 35px; }
+
+        /* === HOME SECTION === */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 100px;
+            position: relative;
+        }
+        .hero-title {
+            font-size: 4rem;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-image-wrapper { position: relative; z-index: 1; }
+        .hero-image-wrapper img {
+            border-radius: 40px;
+            box-shadow: 0 20px 50px var(--primary-glow);
+        }
+        .blob-bg {
+            position: absolute; width: 400px; height: 400px;
+            background: var(--primary-glow); filter: blur(100px);
+            border-radius: 50%; z-index: -1; top: 50%; transform: translateY(-50%);
+        }
+
+        /* === ABOUT SECTION === */
+        .about-section {
+            background-color: var(--card-bg); border-radius: 40px;
+            padding: 60px; border: 1px solid var(--border-color);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.02); position: relative;
+        }
+        .about-image { border-radius: 30px; border: 8px solid var(--bg-color); }
+
+        /* === BUTTONS === */
+        .btn-modern {
+            background: var(--primary); color: #fff; padding: 12px 28px;
+            border-radius: 50px; font-weight: 600; display: inline-block;
+            transition: all 0.3s ease; border: 2px solid var(--primary);
+        }
+        .btn-modern:hover { background: transparent; color: var(--primary); transform: translateY(-3px); }
+        .btn-outline-modern {
+            background: transparent; color: var(--text-main); padding: 12px 28px;
+            border-radius: 50px; font-weight: 600; display: inline-block;
+            transition: all 0.3s ease; border: 2px solid var(--border-color);
+        }
+        .btn-outline-modern:hover { border-color: var(--primary); color: var(--primary); }
+
+        /* === CARDS (Skills & Projects) === */
+        .modern-card {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 24px; padding: 30px; height: 100%; transition: all 0.4s ease;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+        }
+        .modern-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px var(--primary-glow); border-color: var(--primary); }
+        
+        .tech-icons-container { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 15px; }
+        .tech-icon-img {
+            width: 40px; height: 40px; object-fit: contain; background: var(--bg-color);
+            padding: 5px; border-radius: 10px; border: 1px solid var(--border-color);
+        }
+        .project-card .tech-icon-img { width: 32px; height: 32px; padding: 4px; }
+
+        .project-img {
+            border-radius: 16px; overflow: hidden; margin-bottom: 20px; cursor: pointer;
+            position: relative;
+        }
+        .project-img::after {
+            content: 'View Detail'; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,74,173,0.7); color: #fff; display: flex; align-items: center;
+            justify-content: center; font-weight: bold; font-size: 1.2rem; opacity: 0; transition: opacity 0.3s;
+        }
+        .modern-card:hover .project-img::after { opacity: 1; }
+        
+        .project-title-link { cursor: pointer; display: inline-block; transition: color 0.3s; }
+        .project-title-link:hover { color: var(--primary) !important; text-decoration: underline; }
+
+        /* === MODAL (POP-UP) STYLING === */
+        .modal-dialog { max-width: 950px !important; }
+        .modal-content {
+            background-color: var(--card-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            border-radius: 28px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+        }
+
+        .modal.fade .modal-dialog {
+            transition: none !important;
+            transform: scale(0.5) translateY(50px);
+            opacity: 0;
+        }
+        .modal.show .modal-dialog {
+            animation: dramaticPopIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes dramaticPopIn {
+            0% { opacity: 0; transform: scale(0.5) translateY(50px); }
+            70% { opacity: 1; transform: scale(1.03) translateY(-10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .modal-header { border-bottom: 1px solid var(--border-color); padding: 20px 30px; }
+        .modal-body { padding: 30px; }
+        .modal-footer { border-top: 1px solid var(--border-color); padding: 15px 30px; }
+        
+        .mockup-top-grid img {
+            border-radius: 12px; border: 1px solid var(--border-color);
+            max-height: 400px; object-fit: contain; width: 100%; background: rgba(0,0,0,0.02);
+        }
+        
+        .carousel-item img {
+            border-radius: 12px; border: 1px solid var(--border-color);
+            max-height: 350px; object-fit: contain; background: rgba(0,0,0,0.02);
+        }
+        .carousel-control-prev-icon, .carousel-control-next-icon {
+            background-color: var(--primary); border-radius: 50%; padding: 15px;
+        }
+
+        .dark-mode .btn-close { filter: invert(1) grayscale(100%) brightness(200%); }
+
+        /* === LOADING ROBOT OVERLAY (UNTUK MODAL) === */
+        #projectLoader {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1060;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+        }
+        .loader-card {
+            background: var(--card-bg);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 35px 50px;
+            border-radius: 30px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            animation: loaderPulse 1.2s infinite ease-in-out;
+        }
+        @keyframes loaderPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .robot-icon {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: inline-block;
+            animation: robotBounce 0.8s infinite alternate ease-in-out;
+        }
+        @keyframes robotBounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-12px); }
+        }
+
+        /* === ACCORDION SERVICES (PERBAIKAN FONT DARK MODE) === */
+        .accordion-item { 
+            background: var(--card-bg); 
+            border: 1px solid var(--border-color); 
+            border-radius: 16px !important; 
+            margin-bottom: 15px; 
+            overflow: hidden; 
+        }
+        .accordion-button { 
+            background: var(--card-bg); 
+            color: var(--text-main); 
+            font-weight: 600; 
+            box-shadow: none !important; 
+        }
+        .accordion-button:not(.collapsed) { 
+            color: var(--primary); 
+            background: var(--bg-color); 
+        }
+        .accordion-body { 
+            color: var(--text-muted); /* Memaksa isi teks accordion menggunakan warna variabel */
+        }
+        
+        /* Dark Mode Khusus Accordion */
+        .dark-mode .accordion-button { 
+            background: var(--card-bg); 
+            color: var(--text-main); 
+        }
+        .dark-mode .accordion-button:not(.collapsed) { 
+            background: var(--bg-color); 
+            color: var(--primary); 
+        }
+        .dark-mode .accordion-body { 
+            color: var(--text-muted); 
+        }
+        /* Mengubah warna panah accordion menjadi putih saat dark mode */
+        .dark-mode .accordion-button::after { 
+            filter: invert(1) brightness(200%); 
+        }
+        /* Mengembalikan panah ke biru (primary) saat accordion terbuka (active) */
+        .dark-mode .accordion-button:not(.collapsed)::after { 
+            filter: none; 
+        }
+
+        /* === INPUT FORMS === */
+        .form-control { background: var(--bg-color); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 15px; padding: 14px 20px; }
+        .form-control:focus { background: var(--card-bg); border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-glow); color: var(--text-main); }
+
+        /* === STANDBY FOOTER === */
+        .standby-footer {
+            position: fixed; bottom: 25px; left: 50%; transform: translateX(-50%);
+            background: var(--primary); color: #ffffff; padding: 10px 25px;
+            border-radius: 50px; display: flex; align-items: center; gap: 15px;
+            box-shadow: 0 10px 30px var(--primary-glow); z-index: 999; font-size: 0.9rem; font-weight: 500;
+        }
+        .dark-mode .standby-footer { background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); }
+        #darkModeBtn { background: none; border: none; color: inherit; font-size: 1.2rem; cursor: pointer; }
+
+        @media (max-width: 991px) {
+            .hero-title { font-size: 3rem; }
+            .floating-nav { width: 90%; justify-content: space-between; padding: 10px 20px; }
+            .nav-text-links { display: none; } 
+            .standby-footer { width: 85%; justify-content: center; font-size: 0.8rem; }
+            .about-section { padding: 30px 20px; }
+        }
+
+
+        /* === ANIMATED BACKGROUND — TERANG & GELAP BERBEDA === */
+        body::before,
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -3;
+        }
+
+        /* ========================================================== */
+        /* === MODE TERANG: AURORA SOFT + GRID + FLOATING DOTS    === */
+        /* ========================================================== */
+        body::before {
+            background-image:
+                linear-gradient(rgba(0, 74, 173, 0.075) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 74, 173, 0.075) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
+            opacity: 0.95;
+            animation: lightGridMove 14s linear infinite;
+        }
+
+        body::after {
+            background:
+                radial-gradient(circle at 10% 18%, rgba(246, 59, 181, 0.28) 0 55px, transparent 180px),
+                radial-gradient(circle at 88% 18%, rgba(139,92,246,0.22) 0 60px, transparent 190px),
+                radial-gradient(circle at 76% 76%, rgba(0,74,173,0.18) 0 65px, transparent 210px),
+                radial-gradient(circle at 18% 82%, rgba(14,165,233,0.14) 0 55px, transparent 190px);
+            filter: blur(16px);
+            opacity: 0.9;
+            animation: lightAuroraMove 11s ease-in-out infinite alternate;
+        }
+
+        @keyframes lightGridMove {
+            0%   { transform: translate3d(0, 0, 0); }
+            50%  { transform: translate3d(24px, 18px, 0); }
+            100% { transform: translate3d(48px, 36px, 0); }
+        }
+
+        @keyframes lightAuroraMove {
+            0%   { transform: translate3d(-2%, -1%, 0) scale(1); }
+            25%  { transform: translate3d(2%, 1%, 0) scale(1.05); }
+            50%  { transform: translate3d(4%, -2%, 0) scale(1.02); }
+            75%  { transform: translate3d(-1%, 3%, 0) scale(1.07); }
+            100% { transform: translate3d(-3%, 1%, 0) scale(0.99); }
+        }
+
+        /* Lapisan titik cahaya khusus mode terang */
+        .light-particles {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            pointer-events: none;
+            overflow: hidden;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .light-particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: rgba(235, 37, 162, 0.849);
+            box-shadow: 0 0 14px rgba(246, 59, 149, 0.564);
+            animation: lightParticleFloat ease-in-out infinite;
+        }
+
+        .light-particle:nth-child(1) { left: 7%;  top: 28%; animation-duration: 8s;  animation-delay: -2s; }
+        .light-particle:nth-child(2) { left: 16%; top: 64%; animation-duration: 10s; animation-delay: -5s; width: 4px; height: 4px; }
+        .light-particle:nth-child(3) { left: 29%; top: 18%; animation-duration: 9s;  animation-delay: -6s; }
+        .light-particle:nth-child(4) { left: 41%; top: 78%; animation-duration: 12s; animation-delay: -4s; width: 4px; height: 4px; }
+        .light-particle:nth-child(5) { left: 56%; top: 25%; animation-duration: 8.5s; animation-delay: -3s; }
+        .light-particle:nth-child(6) { left: 68%; top: 62%; animation-duration: 11s; animation-delay: -7s; width: 4px; height: 4px; }
+        .light-particle:nth-child(7) { left: 82%; top: 34%; animation-duration: 9.5s; animation-delay: -1s; }
+        .light-particle:nth-child(8) { left: 92%; top: 76%; animation-duration: 13s; animation-delay: -8s; width: 4px; height: 4px; }
+
+        @keyframes lightParticleFloat {
+            0%, 100% { transform: translate3d(0, 10px, 0) scale(0.75); opacity: 0.15; }
+            25% { transform: translate3d(10px, -15px, 0) scale(1); opacity: 0.55; }
+            50% { transform: translate3d(-8px, -34px, 0) scale(1.2); opacity: 0.85; }
+            75% { transform: translate3d(14px, -12px, 0) scale(0.95); opacity: 0.45; }
+        }
+
+        /* Garis cahaya halus bergerak khusus mode terang */
+        .light-streak {
+            position: fixed;
+            top: -15%;
+            left: -20%;
+            width: 45%;
+            height: 140%;
+            z-index: -2;
+            pointer-events: none;
+            background: linear-gradient(
+                110deg,
+                transparent 0%,
+                rgba(59,130,246,0.03) 42%,
+                rgba(59,130,246,0.13) 50%,
+                rgba(139,92,246,0.04) 56%,
+                transparent 68%
+            );
+            filter: blur(10px);
+            transform: rotate(10deg);
+            animation: lightStreakMove 15s ease-in-out infinite;
+        }
+
+        @keyframes lightStreakMove {
+            0%   { transform: translate3d(-35%, 0, 0) rotate(10deg); opacity: 0; }
+            15%  { opacity: 0.8; }
+            50%  { transform: translate3d(85%, 0, 0) rotate(10deg); opacity: 1; }
+            85%  { opacity: 0.4; }
+            100% { transform: translate3d(165%, 0, 0) rotate(10deg); opacity: 0; }
+        }
+
+        /* ========================================================== */
+        /* === MODE GELAP: NEON AURA + DIAGONAL SCAN + PARTICLES === */
+        /* ========================================================== */
+        .dark-mode::before {
+            background-image:
+                linear-gradient(115deg, transparent 0%, rgba(59,130,246,0.11) 48%, transparent 52%);
+            background-size: 320px 320px;
+            opacity: 0.8;
+            animation: darkScan 10s linear infinite;
+        }
+
+        .dark-mode::after {
+            background:
+                radial-gradient(circle at 18% 18%, rgba(59,130,246,0.25) 0 80px, transparent 220px),
+                radial-gradient(circle at 78% 22%, rgba(139,92,246,0.21) 0 90px, transparent 240px),
+                radial-gradient(circle at 72% 76%, rgba(14,165,233,0.16) 0 75px, transparent 210px),
+                radial-gradient(circle at 25% 82%, rgba(59,130,246,0.11) 0 60px, transparent 180px);
+            filter: blur(4px);
+            opacity: 0.95;
+            animation: darkAura 12s ease-in-out infinite alternate;
+        }
+
+        @keyframes darkScan {
+            0% { background-position: -320px -320px; }
+            100% { background-position: 320px 320px; }
+        }
+
+        @keyframes darkAura {
+            0% { transform: translate3d(-1%, 0, 0) scale(1); }
+            50% { transform: translate3d(1.5%, -1%, 0) scale(1.03); }
+            100% { transform: translate3d(-1%, 1.5%, 0) scale(0.99); }
+        }
+
+        /* Partikel dekoratif khusus dark mode */
+        .dark-mode .bg-particles { opacity: 1; }
+        .bg-particles {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            pointer-events: none;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .bg-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(147,197,253,0.8);
+            box-shadow: 0 0 12px rgba(59,130,246,0.9);
+            animation: particleFloat linear infinite;
+        }
+
+        .bg-particle:nth-child(1) { left: 8%;  top: 20%; animation-duration: 15s; animation-delay: -4s; }
+        .bg-particle:nth-child(2) { left: 18%; top: 72%; animation-duration: 19s; animation-delay: -10s; width: 3px; height: 3px; }
+        .bg-particle:nth-child(3) { left: 31%; top: 33%; animation-duration: 17s; animation-delay: -7s; }
+        .bg-particle:nth-child(4) { left: 47%; top: 82%; animation-duration: 21s; animation-delay: -13s; width: 3px; height: 3px; }
+        .bg-particle:nth-child(5) { left: 62%; top: 18%; animation-duration: 16s; animation-delay: -8s; }
+        .bg-particle:nth-child(6) { left: 74%; top: 58%; animation-duration: 20s; animation-delay: -5s; width: 3px; height: 3px; }
+        .bg-particle:nth-child(7) { left: 88%; top: 30%; animation-duration: 18s; animation-delay: -12s; }
+        .bg-particle:nth-child(8) { left: 93%; top: 86%; animation-duration: 23s; animation-delay: -15s; width: 3px; height: 3px; }
+
+        @keyframes particleFloat {
+            0%   { transform: translate3d(0, 30px, 0); opacity: 0; }
+            15%  { opacity: 0.8; }
+            50%  { transform: translate3d(15px, -60px, 0); opacity: 1; }
+            85%  { opacity: 0.5; }
+            100% { transform: translate3d(-10px, -140px, 0); opacity: 0; }
+        }
+
+        /* Saat dark mode aktif, elemen khusus terang disembunyikan */
+        .dark-mode .light-particles,
+        .dark-mode .light-streak { opacity: 0; }
+
+        /* Efek transisi saat berpindah tema */
+        .theme-switching::after { animation: themeSwitchFlash 0.65s ease; }
+
+        @keyframes themeSwitchFlash {
+            0% { opacity: 0.3; filter: blur(5px); }
+            50% { opacity: 1; filter: blur(0); }
+            100% { opacity: 0.95; filter: blur(4px); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            body::before,
+            body::after,
+            .bg-particles,
+            .bg-particle,
+            .light-particles,
+            .light-particle,
+            .light-streak { animation: none !important; }
+        }
+
+    </style>
 </head>
 
 <body>
+    <!-- Animated background: khusus mode terang -->
+    <div class="light-particles" aria-hidden="true">
+        <span class="light-particle"></span><span class="light-particle"></span><span class="light-particle"></span><span class="light-particle"></span>
+        <span class="light-particle"></span><span class="light-particle"></span><span class="light-particle"></span><span class="light-particle"></span>
+    </div>
+    <div class="light-streak" aria-hidden="true"></div>
 
-    <!-- Spinner Start -->
-    <div id="spinner"
-        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-border text-dark" style="width: 3rem; height: 3rem;" role="status">
-            <span class="sr-only">Loading...</span>
+    <!-- Animated background particles: khusus mode gelap -->
+    <div class="bg-particles" aria-hidden="true">
+        <span class="bg-particle"></span><span class="bg-particle"></span><span class="bg-particle"></span><span class="bg-particle"></span>
+        <span class="bg-particle"></span><span class="bg-particle"></span><span class="bg-particle"></span><span class="bg-particle"></span>
+    </div>
+
+
+    <!-- ========================================================== -->
+    <!-- OVERLAY LOADING DINOSAURUS SAAT HALAMAN DIREFRESH          -->
+    <!-- ========================================================== -->
+    <div id="pageLoader">
+        <div class="dino-container">
+            <div class="dino-icon">
+                <i class="fas fa-dragon"></i>
+            </div>
+            <h3 class="fw-bold mb-1">Sabar...</h3>
+            <p class="text-muted mb-0" style="font-size: 0.95rem;">Sedang memuat portofolio</p>
         </div>
     </div>
-    <!-- Spinner End -->
 
-    <!-- Navbar & Hero Start -->
-    <div class="container-fluid header position-relative overflow-hidden p-0">
-        <nav class="navbar navbar-expand-lg fixed-top navbar-light px-4 px-lg-5 py-3 py-lg-0">
-            <a href="index.html" class="navbar-brand p-0">
-                <div class=" wow fadeInLeft" data-wow-delay="0.2s">
-                    <img src="img/logo-baru1.png" class="img-fluid w-100 h-100" alt="">
+    <!-- 1. FLOATING NAVBAR -->
+    <nav class="floating-nav">
+        <a href="#home"><img src="img/logo-baru1.png" alt="Logo" class="nav-brand-img"></a>
+        <div class="nav-text-links d-flex gap-4">
+            <a href="#home" class="nav-link-custom">Home</a>
+            <a href="#about" class="nav-link-custom">About</a>
+            <a href="#skills" class="nav-link-custom">Skills</a>
+            <a href="#project" class="nav-link-custom">Project</a>
+            <a href="#service" class="nav-link-custom">Service</a>
+        </div>
+        <button id="darkModeBtn" aria-label="Toggle Dark Mode">
+            <i class="fas fa-moon" id="darkModeIcon"></i>
+        </button>
+    </nav>
+
+    <!-- 2. HOME SECTION -->
+    <section id="home" class="hero-section container">
+        <div class="blob-bg" style="left: -10%;"></div>
+        <div class="row align-items-center w-100">
+            <div class="col-lg-6 order-2 order-lg-1 mt-5 mt-lg-0">
+                <h4 class="mb-2" style="color: var(--primary);">Hello! I am</h4>
+                <h1 class="hero-title mb-3">Nouval Lazuardy</h1>
+                <h5 class="mb-4" style="font-weight: 500; color: var(--text-muted); line-height: 1.6;">
+                    Bachelor's Degree in Information Systems | Web Developer | UI/UX Design | Desain Grafis & Editing Video
+                </h5>
+                <div class="d-flex gap-3">
+                    <a href="tel:+6283119036831" class="btn-modern">Contact Me</a>
+                    <a href="#project" class="btn-outline-modern">View Work</a>
                 </div>
-                <!-- <h1 class="display-6 m-0" style="color: #010D44;">Gopal</h1> -->
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="fa fa-bars"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto py-0 d-flex align-items-center justify-content-between w-100">
-                    <div class="d-flex" style="margin-left: 2%; gap: 2%;">
-                        <a href="index.html" class="warna-nav nav-item nav-link">Home</a>
-                        <a href="#about" class="warna-nav nav-item nav-link">About</a>
-                        <a href="#skills" class="warna-nav nav-item nav-link">Skills</a>
-                        <a href="#project" class="warna-nav nav-item nav-link">Project</a>
-                        <a href="#service" class="warna-nav nav-item nav-link">Service</a>
-                    </div>
-                    <a href="#information" class="btn-information border rounded-pill py-2 px-4 me-4"
-                        style="transition: background-color 0.3s ease; color: #004aad; border-color: #004aad;">
-                        More Information
+            </div>
+            <div class="col-lg-6 order-1 order-lg-2">
+                <div class="hero-image-wrapper text-center">
+                    <img src="img/profil-home.png" class="img-fluid w-75" alt="Nouval Profile">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. ABOUT SECTION -->
+    <section id="about" class="container py-5 mt-4">
+        <div class="about-section">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-5 text-center">
+                    <img src="img/profil-2.png" class="img-fluid w-100 about-image" alt="About Nouval">
+                </div>
+                <div class="col-lg-7">
+                    <span class="badge rounded-pill mb-2 px-3 py-2" style="background: var(--primary-glow); color: var(--primary);">ABOUT ME</span>
+                    <h2 class="display-6 mb-2">Nouval Lazuardy</h2>
+                    <h6 class="mb-4 text-muted"><i class="fas fa-map-marker-alt me-2"></i>Tuban, 23 Agustus 2002</h6>
+                    <p class="mb-4" style="font-size: 1.05rem;">
+                        Hi! I’m Nouval Lazuardy, an Information Systems graduate passionate about Web Development (Front-End & Back-End), UI/UX Design, and Visual Media Editing. I combine technical problem-solving with creative design to build responsive websites, intuitive mobile/web interfaces, and engaging photo/video content. Open to collaborations and tech/design opportunities—let’s connect!
+                    </p>
+                    <a href="https://www.linkedin.com/in/nouval-lazuardy-a131632b0/" target="_blank" class="btn-modern">
+                        <i class="fab fa-linkedin me-2"></i> About More
                     </a>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- 4. SKILLS SECTION -->
+    <section id="skills" class="container py-5 mt-5">
+        <div class="text-center mb-5">
+            <h4 style="color: var(--primary);">My Skills</h4>
+            <h2>Some Skills I Have</h2>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+                <div class="modern-card text-center">
+                    <i class="fas fa-laptop-code fa-3x mb-3" style="color: var(--primary);"></i>
+                    <h5 class="fw-bold">Web Development</h5>
+                    <p class="mb-4">Memiliki kemampuan di bidang Pemrograman Website Front-end dan Back-End.</p>
+                    <div class="tech-icons-container justify-content-center">
+                        <img src="img/logo-html.png" class="tech-icon-img" alt="HTML">
+                        <img src="img/logo-css.png" class="tech-icon-img" alt="CSS">
+                        <img src="img/logo-php.png" class="tech-icon-img" alt="PHP">
+                        <img src="img/logo-js.png" class="tech-icon-img" alt="JavaScript">
+                        <img src="img/logo-ci.png" class="tech-icon-img" alt="CodeIgniter">
+                    </div>
+                </div>
+            </div>
             
-        </nav>
-
-        <!-- Hero Header Start -->
-        <section id="home">
-            <div class="hero-header overflow-hidden px-5">
-                <div class="rotate-img">
-                    <img src="img/sty-1.png" class="img-fluid w-100" alt="">
-                    <div class="rotate-sty-2"></div>
+            <div class="col-lg-4 col-md-6">
+                <div class="modern-card text-center">
+                    <i class="fas fa-pencil-ruler fa-3x mb-3" style="color: var(--primary);"></i>
+                    <h5 class="fw-bold">UI/UX Design</h5>
+                    <p class="mb-4">Memiliki kemampuan dibidang desain layout Aplikasi Mobile dan Website.</p>
+                    <div class="tech-icons-container justify-content-center">
+                        <img src="img/logo-figma.png" class="tech-icon-img" alt="Figma">
+                        <img src="img/logo-canva.png" class="tech-icon-img" alt="Canva">
+                    </div>
                 </div>
-                <div class="row gy-5 align-items-center flex-column-reverse flex-lg-row">
-                    <div class="col-lg-6 text-center text-lg-start wow fadeInLeft" data-wow-delay="0.1s">
-                        <h1 class="display-4 text-dark mb-4 wow fadeInUp" data-wow-delay="0.3s">Hello!<br>I am Nouval Lazuardy</h1>
-                        <p class="fs-4 mb-4 wow fadeInUp" data-wow-delay="0.5s">Information System at Universitas Hayam Wuruk Perbanas | Web Developer | UI/UX Design | Desain Grafis & Editing Video</p>
-                        <a href="tel:+6283119036831" class="btn-biru rounded-pill py-2 px-5 wow fadeInUp" style="background-color: #004aad; color: #fff; border: 2px solid #004aad; 
-                        transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;"
-                        data-wow-delay="0.7s">
-                            Contact Me
+            </div>
+            
+            <div class="col-lg-4 col-md-12">
+                <div class="modern-card text-center">
+                    <i class="fas fa-paint-brush fa-3x mb-3" style="color: var(--primary);"></i>
+                    <h5 class="fw-bold">Desain Grafis & Video</h5>
+                    <p class="mb-4">Memiliki kemampuan dibidang desain grafis (Sosial Media Design) dan editing video.</p>
+                    <div class="tech-icons-container justify-content-center">
+                        <img src="img/logo-canva.png" class="tech-icon-img" alt="Canva">
+                        <img src="img/logo-pixellab.png" class="tech-icon-img" alt="Pixellab">
+                        <img src="img/logo-capcut.png" class="tech-icon-img" alt="Capcut">
+                        <img src="img/logo-ppt.png" class="tech-icon-img" alt="PowerPoint">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. PROJECT SECTION -->
+    <section id="project" class="container py-5 mt-5">
+        <div class="text-center mb-5">
+            <h4 style="color: var(--primary);">Project</h4>
+            <h2>Some Projects I Have Worked On</h2>
+            <p><i>(Klik project untuk melihat detail mockup)</i></p>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 project-card">
+            
+            <!-- Aplikasi Penilaian kinerja mahasiswa -->
+            <div class="col">
+                <div class="modern-card p-3">
+                    <div class="project-img project-trigger" data-modal-target="modalProject10">
+                        <img src="img/app-mhs.png" class="img-fluid w-100" alt="App Mahasiswa">
+                    </div>
+                    <p class="mb-1" style="font-size: 0.85rem;"><i class="fa fa-clock me-1"></i> Jan 25.2025</p>
+                    <h5 class="fw-bold mb-3 project-title-link project-trigger" data-modal-target="modalProject10">Aplikasi Penilaian Kinerja Mahasiswa <i class="fas fa-external-link-alt ms-1 fs-6"></i></h5>
+                    <p style="font-size: 0.9rem;">Aplikasi yang dirancang untuk memudahkan kemahasiswaan untuk menilai prestasi dari semua mahasiswa.</p>
+                    <div class="tech-icons-container">
+                        <img src="img/logo-html.png" class="tech-icon-img" alt="HTML"><img src="img/logo-css.png" class="tech-icon-img" alt="CSS"><img src="img/logo-php.png" class="tech-icon-img" alt="PHP"><img src="img/logo-js.png" class="tech-icon-img" alt="JS"><img src="img/logo-ci.png" class="tech-icon-img" alt="CI">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 1. Toko Buah -->
+            <div class="col">
+                <div class="modern-card p-3">
+                    <div class="project-img project-trigger" data-modal-target="modalProject1">
+                        <img src="img/app-buah.png" class="img-fluid w-100" alt="Toko Buah">
+                    </div>
+                    <p class="mb-1" style="font-size: 0.85rem;"><i class="fa fa-clock me-1"></i> Feb 21.2024</p>
+                    <h5 class="fw-bold mb-3 project-title-link project-trigger" data-modal-target="modalProject1">Aplikasi Toko Buah <i class="fas fa-external-link-alt ms-1 fs-6"></i></h5>
+                    <p style="font-size: 0.9rem;">Aplikasi yang dirancang untuk memudahkan pemilik dalam pengelolaan penjualan dan pembelian buah-buahan.</p>
+                    <div class="tech-icons-container">
+                        <img src="img/logo-html.png" class="tech-icon-img" alt="HTML"><img src="img/logo-css.png" class="tech-icon-img" alt="CSS"><img src="img/logo-php.png" class="tech-icon-img" alt="PHP"><img src="img/logo-js.png" class="tech-icon-img" alt="JS"><img src="img/logo-ci.png" class="tech-icon-img" alt="CI">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Task Management -->
+            <div class="col">
+                <div class="modern-card p-3">
+                    <div class="project-img project-trigger" data-modal-target="modalProject2">
+                        <img src="img/app-task.png" class="img-fluid w-100" alt="Task">
+                    </div>
+                    <p class="mb-1" style="font-size: 0.85rem;"><i class="fa fa-clock me-1"></i> Mar 18.2024</p>
+                    <h5 class="fw-bold mb-3 project-title-link project-trigger" data-modal-target="modalProject2">Aplikasi Manajemen Task <i class="fas fa-external-link-alt ms-1 fs-6"></i></h5>
+                    <p style="font-size: 0.9rem;">Solusi berbasis web untuk membantu pengguna mengorganisir, memantau, dan menyelesaikan tugas secara efisien.</p>
+                    <div class="tech-icons-container">
+                        <img src="img/logo-html.png" class="tech-icon-img" alt="HTML"><img src="img/logo-css.png" class="tech-icon-img" alt="CSS"><img src="img/logo-php.png" class="tech-icon-img" alt="PHP"><img src="img/logo-js.png" class="tech-icon-img" alt="JS"><img src="img/logo-ci.png" class="tech-icon-img" alt="CI">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. RME -->
+            <div class="col">
+                <div class="modern-card p-3">
+                    <div class="project-img project-trigger" data-modal-target="modalProject3">
+                        <img src="img/app-rme.png" class="img-fluid w-100" alt="RME">
+                    </div>
+                    <p class="mb-1" style="font-size: 0.85rem;"><i class="fa fa-clock me-1"></i> Jun 03.2024</p>
+                    <h5 class="fw-bold mb-3 project-title-link project-trigger" data-modal-target="modalProject3">Aplikasi RME (Evomedis) <i class="fas fa-external-link-alt ms-1 fs-6"></i></h5>
+                    <p style="font-size: 0.9rem;">Aplikasi rekam medis elektronik untuk mengelola data pasien. Fokus pada antarmuka form pengguna dan back-end.</p>
+                    <div class="tech-icons-container">
+                        <img src="img/logo-html.png" class="tech-icon-img" alt="HTML"><img src="img/logo-css.png" class="tech-icon-img" alt="CSS"><img src="img/logo-php.png" class="tech-icon-img" alt="PHP"><img src="img/logo-js.png" class="tech-icon-img" alt="JS"><img src="img/logo-ci.png" class="tech-icon-img" alt="CI">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. Portofolio v1 -->
+            <div class="col">
+                <div class="modern-card p-3">
+                    <div class="project-img project-trigger" data-modal-target="modalProject4">
+                        <img src="img/app-portov1.png" class="img-fluid w-100" alt="Portofolio v1">
+                    </div>
+                    <p class="mb-1" style="font-size: 0.85rem;"><i class="fa fa-clock me-1"></i> Jul 21.2024</p>
+                    <h5 class="fw-bold mb-3 project-title-link project-trigger" data-modal-target="modalProject4">Personal Portofolio v1 <i class="fas fa-external-link-alt ms-1 fs-6"></i></h5>
+                    <p style="font-size: 0.9rem;">Website portofolio pribadi versi 1 dirancang untuk menampilkan berbagai proyek. <a href="https://githubnouval23.github.io/Website-Portofolio" target="_blank">Lihat Disini</a></p>
+                    <div class="tech-icons-container">
+                        <img src="img/logo-html.png" class="tech-icon-img" alt="HTML"><img src="img/logo-css.png" class="tech-icon-img" alt="CSS"><img src="img/logo-php.png" class="tech-icon-img" alt="PHP"><img src="img/logo-js.png" class="tech-icon-img" alt="JS">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. Portofolio v2 -->
+            <div class="col">
+                <div class="modern-card p-3">
+                    <div class="project-img project-trigger" data-modal-target="modalProject5">
+                        <img src="img/porto-v2.png" class="img-fluid w-100" alt="Portofolio v2">
+                    </div>
+                    <p class="mb-1" style="font-size: 0.85rem;"><i class="fa fa-clock me-1"></i> Aug 11.2024</p>
+                    <h5 class="fw-bold mb-3 project-title-link project-trigger" data-modal-target="modalProject5">Personal Portofolio v2 <i class="fas fa-external-link-alt ms-1 fs-6"></i></h5>
+                    <p style="font-size: 0.9rem;">Website portofolio versi 2 dengan antarmuka yang lebih menarik, navigasi mudah, dan informasi komprehensif.</p>
+                    <div class="tech-icons-container">
+                        <img src="img/logo-html.png" class="tech-icon-img" alt="HTML"><img src="img/logo-css.png" class="tech-icon-img" alt="CSS"><img src="img/logo-php.png" class="tech-icon-img" alt="PHP"><img src="img/logo-js.png" class="tech-icon-img" alt="JS">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. Perpustakaan -->
+            <div class="col">
+                <div class="modern-card p-3">
+                    <div class="project-img project-trigger" data-modal-target="modalProject6">
+                        <img src="img/app-perpus.png" class="img-fluid w-100" alt="Perpustakaan">
+                    </div>
+                    <p class="mb-1" style="font-size: 0.85rem;"><i class="fa fa-clock me-1"></i> Sep 18.2023</p>
+                    <h5 class="fw-bold mb-3 project-title-link project-trigger" data-modal-target="modalProject6">Aplikasi Perpustakaan <i class="fas fa-external-link-alt ms-1 fs-6"></i></h5>
+                    <p style="font-size: 0.9rem;">Platform digital untuk mempermudah pengelolaan dan akses koleksi buku dengan antarmuka intuitif.</p>
+                    <div class="tech-icons-container">
+                        <img src="img/logo-html.png" class="tech-icon-img" alt="HTML"><img src="img/logo-css.png" class="tech-icon-img" alt="CSS"><img src="img/logo-php.png" class="tech-icon-img" alt="PHP"><img src="img/logo-js.png" class="tech-icon-img" alt="JS">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. Husqy Pets Mobile -->
+            <div class="col">
+                <div class="modern-card p-3">
+                    <div class="project-img project-trigger" data-modal-target="modalProject7">
+                        <img src="img/Mockup-husqy.png" class="img-fluid w-100" alt="Husqy">
+                    </div>
+                    <p class="mb-1" style="font-size: 0.85rem;"><i class="fa fa-clock me-1"></i> Jan 16.2024</p>
+                    <h5 class="fw-bold mb-3 project-title-link project-trigger" data-modal-target="modalProject7">UI/UX Husqy Pets (Mobile) <i class="fas fa-external-link-alt ms-1 fs-6"></i></h5>
+                    <p style="font-size: 0.9rem;">Desain aplikasi petshop (kebutuhan hewan, grooming, hotel). Terpublikasi di jurnal <a href="https://jurnalhafasy.com/index.php/msj/article/view/152" target="_blank">disini</a>.</p>
+                    <div class="tech-icons-container">
+                        <img src="img/logo-figma.png" class="tech-icon-img" alt="Figma"><img src="img/logo-canva.png" class="tech-icon-img" alt="Canva">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 11. Husqy Pets Versi Website -->
+            <div class="col">
+                <div class="modern-card p-3">
+                    <div class="project-img project-trigger" data-modal-target="modalProject11">
+                        <img src="img/webpets-4.png" class="img-fluid w-100" alt="Husqy">
+                    </div>
+                    <p class="mb-1" style="font-size: 0.85rem;"><i class="fa fa-clock me-1"></i> Jan 16.2024</p>
+                    <h5 class="fw-bold mb-3 project-title-link project-trigger" data-modal-target="modalProject11">UI/UX Husqy Pets (Website) <i class="fas fa-external-link-alt ms-1 fs-6"></i></h5>
+                    <p style="font-size: 0.9rem;">Desain aplikasi petshop (kebutuhan hewan, grooming, hotel). Terpublikasi di jurnal <a href="https://jurnalhafasy.com/index.php/msj/article/view/152" target="_blank">disini</a>.</p>
+                    <div class="tech-icons-container">
+                        <img src="img/logo-figma.png" class="tech-icon-img" alt="Figma"><img src="img/logo-canva.png" class="tech-icon-img" alt="Canva">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. LiBer -->
+            <div class="col">
+                <div class="modern-card p-3">
+                    <div class="project-img project-trigger" data-modal-target="modalProject8">
+                        <img src="img/Mockup-liber.png" class="img-fluid w-100" alt="LiBer">
+                    </div>
+                    <p class="mb-1" style="font-size: 0.85rem;"><i class="fa fa-clock me-1"></i> Aug 05.2023</p>
+                    <h5 class="fw-bold mb-3 project-title-link project-trigger" data-modal-target="modalProject8">UI/UX Aplikasi LiBer <i class="fas fa-external-link-alt ms-1 fs-6"></i></h5>
+                    <p style="font-size: 0.9rem;">Desain platform inovatif untuk pengelolaan dan pengumpulan sampah guna meningkatkan kesadaran daur ulang.</p>
+                    <div class="tech-icons-container">
+                        <img src="img/logo-figma.png" class="tech-icon-img" alt="Figma"><img src="img/logo-canva.png" class="tech-icon-img" alt="Canva">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 9. SUMIKAN -->
+            <div class="col">
+                <div class="modern-card p-3">
+                    <div class="project-img project-trigger" data-modal-target="modalProject9">
+                        <img src="img/Mockup-sumikan.png" class="img-fluid w-100" alt="SUMIKAN">
+                    </div>
+                    <p class="mb-1" style="font-size: 0.85rem;"><i class="fa fa-clock me-1"></i> Des 07.2023</p>
+                    <h5 class="fw-bold mb-3 project-title-link project-trigger" data-modal-target="modalProject9">UI/UX Aplikasi SUMIKAN <i class="fas fa-external-link-alt ms-1 fs-6"></i></h5>
+                    <p style="font-size: 0.9rem;">Aplikasi penjualan ikan yang terintegrasi Google Maps. Dikembangkan dengan metode design thinking.</p>
+                    <div class="tech-icons-container">
+                        <img src="img/logo-figma.png" class="tech-icon-img" alt="Figma"><img src="img/logo-canva.png" class="tech-icon-img" alt="Canva">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 6. SERVICE / FAQ -->
+    <section id="service" class="container py-5 mt-5">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6">
+                <h4 style="color: var(--primary);">Service</h4>
+                <h2 class="mb-4">What Can I Do</h2>
+                
+                <div class="accordion" id="serviceAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#colOne" aria-expanded="true">
+                                What does a Web Developer do?
+                            </button>
+                        </h2>
+                        <div id="colOne" class="accordion-collapse collapse show" data-bs-parent="#serviceAccordion">
+                            <div class="accordion-body">
+                                <strong>Web Developer</strong> bertanggung jawab merancang, mengembangkan, dan memelihara situs web. Bekerja dengan berbagai bahasa pemrograman untuk menciptakan antarmuka menarik dan mengelola basis data.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#colTwo" aria-expanded="false">
+                                Why do we need a UI/UX Designer?
+                            </button>
+                        </h2>
+                        <div id="colTwo" class="accordion-collapse collapse" data-bs-parent="#serviceAccordion">
+                            <div class="accordion-body">
+                                <strong>UI/UX Designer</strong> menciptakan pengalaman pengguna yang optimal. Berfokus pada antarmuka yang intuitif dan estetis untuk meminimalkan kebingungan dan meningkatkan kepuasan pelanggan.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#colThree" aria-expanded="false">
+                                What do Graphic Designers & Video Editing do?
+                            </button>
+                        </h2>
+                        <div id="colThree" class="accordion-collapse collapse" data-bs-parent="#serviceAccordion">
+                            <div class="accordion-body">
+                                <strong>Desain Grafis & Editing Video</strong> melibatkan tugas kreatif merancang visual untuk sosial media, serta mengedit dan memproduksi video agar pesan tersampaikan dengan menarik.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <img src="img/profil-home.png" class="img-fluid w-75 rounded-4 shadow-sm" alt="Service Image">
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. CONTACT & INFO -->
+    <section id="information" class="container py-5 my-5">
+        <div class="modern-card">
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6">
+                    <h3 class="mb-4">Send Suggestions</h3>
+                    <form onsubmit="sendToWhatsApp(event)">
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Nama</label>
+                            <input type="text" class="form-control" id="name" required placeholder="Masukkan Nama Anda">
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Saran & Masukan</label>
+                            <textarea class="form-control" id="pesan" rows="4" required placeholder="Tulis pesan Anda di sini..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-modern w-100"><i class="fab fa-whatsapp me-2"></i>Kirim Pesan</button>
+                    </form>
+                </div>
+                
+                <div class="col-lg-6 border-start ps-lg-5">
+                    <h3 class="mb-4">Contact Info</h3>
+                    <div class="d-flex flex-column gap-3 mb-4">
+                        <a href="https://www.google.com/maps/place/Tuban,+Jawa+Timur" target="_blank" class="text-main" style="font-size: 1.1rem;">
+                            <i class="fa fa-map-marker-alt text-primary me-3 fs-4"></i> Tuban, Jawa Timur
+                        </a>
+                        <a href="mailto:nouvallazuardy@gmail.com" class="text-main" style="font-size: 1.1rem;">
+                            <i class="fas fa-envelope text-primary me-3 fs-4"></i> E-Mail
+                        </a>
+                        <a href="tel:+6283119036831" class="text-main" style="font-size: 1.1rem;">
+                            <i class="fas fa-phone text-primary me-3 fs-4"></i> WhatsApp Me!
                         </a>
                     </div>
-                    <div class="col-lg-5 wow fadeInRight" data-wow-delay="0.2s">
-                        <img src="img/foto-profilhp.png" class="img-fluid w-100 h-100" alt="">
+                    
+                    <h5 class="mb-3">Social Media</h5>
+                    <div class="d-flex gap-3">
+                        <a href="https://www.instagram.com/nouval23_?igsh=MTl1ODVha3oyNHR2OA==" target="_blank" class="btn btn-outline-primary rounded-circle p-3" style="width:50px;height:50px;display:flex;align-items:center;justify-content:center;">
+                            <i class="fab fa-instagram fs-4"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/nouval-lazuardy-a131632b0/" target="_blank" class="btn btn-outline-primary rounded-circle p-3" style="width:50px;height:50px;display:flex;align-items:center;justify-content:center;">
+                            <i class="fab fa-linkedin-in fs-4"></i>
+                        </a>
                     </div>
-                </div> 
+                </div>
             </div>
-        </section>
-        <!-- Hero Header End -->
+        </div>
+    </section>
+
+    <!-- 8. STANDBY FOOTER (DENGAN HARI & JAM REALTIME) -->
+    <div class="standby-footer">
+        <i class="fas fa-copyright"></i>
+        <span><a href="https://www.instagram.com/nouval23_?igsh=MTl1ODVha3oyNHR2OA==" target="_blank" style="color:inherit; text-decoration:none;">Nouval Lazuardy</a>, 2026.</span>
+        <div style="width: 2px; height: 16px; background: rgba(255,255,255,0.4);"></div>
+        <span id="liveTime"></span>
     </div>
-    <!-- Navbar & Hero End -->
 
+    <!-- OVERLAY LOADING ROBOT UNTUK MODAL PROJECT -->
+    <div id="projectLoader">
+        <div class="loader-card">
+            <div class="robot-icon"><i class="fas fa-robot"></i></div>
+            <h5 class="fw-bold mb-1">Memuat Project...</h5>
+            <p class="text-muted mb-0" style="font-size: 0.85rem;">Menyiapkan mockup & deskripsi detail</p>
+        </div>
+    </div>
 
-    <!-- About Me-->
-    <section id="about">
-        <div class="container-fluid overflow-hidden py-5" style="margin-top: 6rem;">
-            <div class="container py-5">
-                <div class="row g-5">
-                    <div class="col-lg-5 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="RotateMoveLeft">
-                            <img src="img/foto-profilwarna.png" class="img-fluid w-100" alt="">
-                        </div>
+    <!-- ========================================================== -->
+    <!-- TEMPLATE MODAL (POP-UP)                                    -->
+    <!-- ========================================================== -->
+    
+    <!-- Modal App Penilaian Kinerja Mahasiswa (Project 10) -->
+    <div class="modal fade" id="modalProject10" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Aplikasi Penilaian Kinerja Mahasiswa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="fw-bold mb-2">Deskripsi Project</h6>
+                    <p class="mb-4">Aplikasi yang dirancang untuk memudahkan kemahasiswaan untuk menilai prestasi dari semua mahasiswa. Penilaian pada aplikasi ini dibuat berdasarkan pedoman SIMKATMAWA Tahun 2025.</p>
+                    
+                    <h6 class="fw-bold mb-2">Tampilan Utama</h6>
+                    <div class="mb-4 mockup-top-grid">
+                        <img src="img/app-mhs.png" alt="Mockup Utama App Mahasiswa">
                     </div>
-                    <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <h4 class="mb-1 text" style="color: #004aad;">About Me</h4>
-                        <h1 class="display-5 mb-1">Nouval Lazuardy</h1>
-                        <h6 class="mb-3">Tuban, 23 Agustus 2002</h6>
-                        <p class="mb-4">Hello, I am an active student of the Information Systems Study Program at Hayam
-                            Wuruk Perbanas University.
-                            I have interests and abilities in programming (Front-end and Back-end developers, especially
-                            website creation),
-                            UI/UX Mobile App or Website Design, and also enjoy editing photos and videos.
-                        </p>
-                        <a href="https://www.linkedin.com/in/nouval-lazuardy-a131632b0/" target="_blank"
-                            class="btn-more rounded-pill py-2 px-5"
-                            style="background-color: #004aad; color: #fff; border: 2px solid #004aad; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;">
-                            About More
-                        </a>
+
+                    <h6 class="fw-bold mb-2">Tampilan Lainnya</h6>
+                    <div id="carouselProject10" class="carousel slide mb-4" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/mhs-login.png" class="d-block w-100" alt="Slide 1 Foto 1"></div>
+                                    <div class="col-6"><img src="img/app-mhs.png" class="d-block w-100" alt="Slide 1 Foto 2"></div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/mhs-role.png" class="d-block w-100" alt="Slide 2 Foto 1"></div>
+                                    <div class="col-6"><img src="img/mhs-prestasi.png" class="d-block w-100" alt="Slide 2 Foto 2"></div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/mhs-user.png" class="d-block w-100" alt="Slide 3 Foto 1"></div>
+                                    <div class="col-6"><img src="img/mhs-simkatmawa.png" class="d-block w-100" alt="Slide 3 Foto 2"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselProject10" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselProject10" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+                    </div>
+
+                    <h6 class="fw-bold">Teknologi yang Digunakan</h6>
+                    <div class="tech-icons-container mt-2">
+                        <img src="img/logo-html.png" class="tech-icon-img" alt="HTML"><img src="img/logo-css.png" class="tech-icon-img" alt="CSS"><img src="img/logo-php.png" class="tech-icon-img" alt="PHP"><img src="img/logo-js.png" class="tech-icon-img" alt="JS"><img src="img/logo-ci.png" class="tech-icon-img" alt="CI">
                     </div>
                 </div>
+                <div class="modal-footer"><button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Tutup</button></div>
             </div>
         </div>
-    </section>
-    <!-- About End -->
+    </div>
 
-
-    <!-- Skills -->
-    <section id="skills">
-        <div class="container-fluid service py-5">
-            <div class="container py-5">
-                <div class="text-center mx-auto mb-3 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 900px;">
-                    <h4 class="mb-1 text" style="color: #004aad;">My Skills</h4>
-                    <h3 class="display-8 mb-1 fw-bold">Some Skills I Have</h3>
+    <!-- Modal 1: Toko Buah -->
+    <div class="modal fade" id="modalProject1" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Aplikasi Toko Buah</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="row g-4 justify-content-center">
-                    <div class="col-12 col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="service-item text-center rounded p-4">
-                            <div class="service-icon d-inline-block bg-light rounded p-4 mb-4">
-                                <i class="fas fa-laptop-code fa-5x text-secondary"></i>
-                            </div>
-                            <div class="service-content">
-                                <h5 class="mb-4 fw-bold">Web Development</h5>
-                                <p class="mb-4">Memiliki kemampuan di bidang Pemrograman Website Front-end dan Back-End
-                                </p>
-                                <div class="d-flex justify-content-center flex-wrap" style="gap: 10px;">
-                                    <img src="img/logo-html.png" class="img-fluid" alt="HTML Logo"
-                                        style="width: 17%; height: auto;">
-                                    <img src="img/logo-css.png" class="img-fluid" alt="CSS Logo"
-                                        style="width: 17%; height: auto;">
-                                    <img src="img/logo-php.png" class="img-fluid" alt="PHP Logo"
-                                        style="width: 17%; height: auto;">
-                                    <img src="img/logo-js.png" class="img-fluid" alt="JavaScript Logo"
-                                        style="width: 17%; height: auto;">
-                                    <img src="img/logo-ci.png" class="img-fluid" alt="CodeIgniter Logo"
-                                        style="width: 17%; height: auto;">
-                                </div>
-                            </div>
-                        </div>
+                <div class="modal-body">
+                    <h6 class="fw-bold mb-2">Deskripsi Project</h6>
+                    <p class="mb-4">Project pembuatan Aplikasi Toko Buah ini dirancang secara khusus untuk membantu para pemilik toko buah dalam mengelola pencatatan transaksi, penjualan, dan stok ketersediaan buah-buahan dengan lebih rapi, cepat, dan terkomputerisasi.</p>
+                    
+                    <h6 class="fw-bold mb-2">Tampilan Utama</h6>
+                    <div class="mb-4 mockup-top-grid">
+                        <img src="img/app-buah.png" alt="Mockup Utama Toko Buah">
                     </div>
-                    <div class="col-12 col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="service-item text-center rounded p-4">
-                            <div class="service-icon d-inline-block bg-light rounded p-4 mb-4">
-                                <i class="fas fa-pencil-ruler fa-5x text-secondary"></i>
+
+                    <h6 class="fw-bold mb-2">Tampilan Lainnya</h6>
+                    <div id="carouselProject1" class="carousel slide mb-4" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/app-buah.png" class="d-block w-100" alt="Slide 1 Foto 1"></div>
+                                    <div class="col-6"><img src="img/app-buah.png" class="d-block w-100" alt="Slide 1 Foto 2"></div>
+                                </div>
                             </div>
-                            <div class="service-content">
-                                <h5 class="mb-4 fw-bold">UI/UX Design</h5>
-                                <p class="mb-4">Memiliki kemampuan dibidang desain layout Aplikasi Mobile dan Website
-                                </p>
-                                <div class="d-flex justify-content-center flex-wrap" style="gap: 10px;">
-                                    <img src="img/logo-figma.png" class="img-fluid" alt="HTML Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-canva.png" class="img-fluid" alt="HTML Logo"
-                                        style="width: 14%; height: auto;">
+                            <div class="carousel-item">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/app-buah.png" class="d-block w-100" alt="Slide 2 Foto 1"></div>
+                                    <div class="col-6"><img src="img/app-buah.png" class="d-block w-100" alt="Slide 2 Foto 2"></div>
                                 </div>
                             </div>
                         </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselProject1" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselProject1" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
                     </div>
-                    <div class="col-12 col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="service-item text-center rounded p-4">
-                            <div class="service-icon d-inline-block bg-light rounded p-4 mb-4">
-                                <i class="fa fa-paint-brush fa-5x text-secondary"></i>
-                            </div>
-                            <div class="service-content">
-                                <h5 class="mb-4 fw-bold">Desain Grafis & Editing Video</h5>
-                                <p class="mb-4">Memiliki kemampuan dibidang desain grafis seperti Sosial Media Design
-                                    dan juga kemampuan dibidang editing video</p>
-                                <div class="d-flex justify-content-center flex-wrap" style="gap: 10px;">
-                                    <img src="img/logo-canva.png" class="img-fluid" alt="HTML Logo"
-                                        style="width: 14%; height: auto;">
-                                    <img src="img/logo-pixellab.png" class="img-fluid" alt="CSS Logo"
-                                        style="width: 14%; height: auto;">
-                                    <img src="img/logo-capcut.png" class="img-fluid" alt="PHP Logo"
-                                        style="width: 14%; height: auto;">
-                                    <img src="img/logo-ppt.png" class="img-fluid" alt="JavaScript Logo"
-                                        style="width: 14%; height: auto;">
-                                </div>
-                            </div>
-                        </div>
+
+                    <h6 class="fw-bold">Teknologi yang Digunakan</h6>
+                    <div class="tech-icons-container mt-2">
+                        <img src="img/logo-html.png" class="tech-icon-img" alt="HTML"><img src="img/logo-css.png" class="tech-icon-img" alt="CSS"><img src="img/logo-php.png" class="tech-icon-img" alt="PHP"><img src="img/logo-js.png" class="tech-icon-img" alt="JS"><img src="img/logo-ci.png" class="tech-icon-img" alt="CI">
                     </div>
                 </div>
-
+                <div class="modal-footer"><button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Tutup</button></div>
             </div>
         </div>
-    </section>
-    <!-- SkillsEnd -->
+    </div>
 
+    <!-- Modal 2: Task Management -->
+    <div class="modal fade" id="modalProject2" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Aplikasi Manajemen Task</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="fw-bold mb-2">Deskripsi Project</h6>
+                    <p class="mb-4">Aplikasi Manajemen Task adalah solusi berbasis web yang dirancang untuk membantu tim atau individu dalam mengorganisir, memantau batas waktu (deadline), dan menyelesaikan tugas-tugas harian secara efisien.</p>
+                    
+                    <h6 class="fw-bold mb-2">Tampilan Utama</h6>
+                    <div class="mb-4 mockup-top-grid">
+                        <img src="img/app-task.png" alt="Mockup Utama Task">
+                    </div>
 
-    <!-- Blog Start -->
-    <section id="project">
-        <div class="container-fluid blog py-5">
-            <div class="container py-5">
-                <div class="text-center mx-auto mb-4 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 900px;">
-                    <h4 class="text" style="color: #004aad;">Project</h4>
-                    <h3 class="display-8 mb-2 fw-bold">Some Projects I Have Worked On</h3>
-                    <!-- <p class="mb-0">Ada beberapa project yang telah saya kerjakan mulai dari pembuatan dan pengembangan website, UI/UX design, desain grafis ataupun editing video
-                    </p> -->
-                </div>
-                <div class="row g-4 justify-content-center mb-4">
-                    <div class="col-md-6 col-lg-4 col-xl-4 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="blog-item">
-                            <div class="blog-img">
-                                <img src="img/app-buah.png" class="img-fluid w-100" alt="">
-                                <div class="blog-info">
-                                    <span><i class="fa fa-clock"></i> Feb 21.2024</span>
+                    <h6 class="fw-bold mb-2">Tampilan Lainnya</h6>
+                    <div id="carouselProject2" class="carousel slide mb-4" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/app-task.png" class="d-block w-100" alt="Slide 1 Foto 1"></div>
+                                    <div class="col-6"><img src="img/app-task.png" class="d-block w-100" alt="Slide 1 Foto 2"></div>
                                 </div>
                             </div>
-                            <div class="blog-content text-dark border p-4">
-                                <h4 class="mb-4 fw-bold">Aplikasi Toko Buah</h4>
-                                <p class="mb-4">Project pembuatan Aplikasi Toko Buah adalah aplikasi yang dirancang
-                                    untuk memudahkan pemilik dalam pengelolaan penjualan dan pembelian buah-buahan.</p>
-                                <div class="d-flex justify-content-center flex-wrap" style="gap: 10px;">
-                                    <img src="img/logo-html.png" class="img-fluid" alt="HTML Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-css.png" class="img-fluid" alt="CSS Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-php.png" class="img-fluid" alt="PHP Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-js.png" class="img-fluid" alt="JavaScript Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-ci.png" class="img-fluid" alt="CodeIgniter Logo"
-                                        style="width: 15%; height: auto;">
+                            <div class="carousel-item">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/app-task.png" class="d-block w-100" alt="Slide 2 Foto 1"></div>
+                                    <div class="col-6"><img src="img/app-task.png" class="d-block w-100" alt="Slide 2 Foto 2"></div>
                                 </div>
                             </div>
                         </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselProject2" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselProject2" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
                     </div>
-                    <div class="col-md-6 col-lg-4 col-xl-4 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="blog-item">
-                            <div class="blog-img">
-                                <img src="img/app-task.png" class="img-fluid w-100" alt="">
-                                <div class="blog-info">
-                                    <span><i class="fa fa-clock"></i> Mar 18.2024</span>
-                                </div>
-                            </div>
-                            <div class="blog-content text-dark border p-4">
-                                <h4 class="mb-4 fw-bold">Aplikasi Manajemen Task</h4>
-                                <p class="mb-4">Project pembuatan Aplikasi Manajemen Task adalah solusi berbasis web
-                                    yang dirancang untuk membantu pengguna mengorganisir, memantau, dan menyelesaikan
-                                    tugas-tugas mereka secara efisien.</p>
-                                <div class="d-flex justify-content-center flex-wrap" style="gap: 10px;">
-                                    <img src="img/logo-html.png" class="img-fluid" alt="HTML Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-css.png" class="img-fluid" alt="CSS Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-php.png" class="img-fluid" alt="PHP Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-js.png" class="img-fluid" alt="JavaScript Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-ci.png" class="img-fluid" alt="CodeIgniter Logo"
-                                        style="width: 15%; height: auto;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 col-xl-4 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="blog-item">
-                            <div class="blog-img">
-                                <img src="img/app-rme.png" class="img-fluid w-100" alt="">
-                                <div class="blog-info">
-                                    <span><i class="fa fa-clock"></i> Jun 03.2024</span>
-                                </div>
-                            </div>
-                            <div class="blog-content text-dark border p-4">
-                                <h4 class="mb-4 fw-bold">Aplikasi Rekam Medis Elektronik (RME)</h4>
-                                <p class="mb-4">Project pengembangan aplikasi Evomedis adalah aplikasi rekam medis
-                                    elektronik yang dirancang untuk memudahkan pengelolaan data medis pasien oleh tenaga
-                                    kesehatan. Dalam proyek ini, fokus saya adalah mengembangkan antarmuka form pengguna
-                                    dan back-end untuk proses CRUD, sehingga memudahkan dokter dan perawat dalam
-                                    mengakses dan mengelola informasi medis.</p>
-                                <div class="d-flex justify-content-center flex-wrap" style="gap: 10px;">
-                                    <img src="img/logo-html.png" class="img-fluid" alt="HTML Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-css.png" class="img-fluid" alt="CSS Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-php.png" class="img-fluid" alt="PHP Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-js.png" class="img-fluid" alt="JavaScript Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-ci.png" class="img-fluid" alt="CodeIgniter Logo"
-                                        style="width: 15%; height: auto;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row g-4 justify-content-center mb-4">
-                    <div class="col-md-6 col-lg-4 col-xl-4 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="blog-item">
-                            <div class="blog-img">
-                                <img src="img/app-portov1.png" class="img-fluid w-100" alt="">
-                                <div class="blog-info">
-                                    <span><i class="fa fa-clock"></i> Jul 21.2024</span>
-                                </div>
-                            </div>
-                            <div class="blog-content text-dark border p-4">
-                                <h4 class="mb-4 fw-bold">Aplikasi Personal Portofolio v1</h4>
-                                <p class="mb-4">Website portofolio pribadi versi 1 ini adalah platform yang dirancang
-                                    untuk menampilkan berbagai proyek dan keterampilan saya sebagai seorang pengembang
-                                    web. Dapat diakses di <a href="https://githubnouval23.github.io/Website-Portofolio"
-                                        target="_blank">Portofolio | Nouval</a></p>
-                                <div class="d-flex justify-content-center flex-wrap" style="gap: 10px;">
-                                    <img src="img/logo-html.png" class="img-fluid" alt="HTML Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-css.png" class="img-fluid" alt="CSS Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-php.png" class="img-fluid" alt="PHP Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-js.png" class="img-fluid" alt="JavaScript Logo"
-                                        style="width: 15%; height: auto;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 col-xl-4 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="blog-item">
-                            <div class="blog-img">
-                                <img src="img/porto-v2.png" class="img-fluid w-100" alt="">
-                                <div class="blog-info">
-                                    <span><i class="fa fa-clock"></i> Aug 11.2024</span>
-                                </div>
-                            </div>
-                            <div class="blog-content text-dark border p-4">
-                                <h4 class="mb-4 fw-bold">Aplikasi Personal Portofolio v2</h4>
-                                <p class="mb-4">Website portofolio pribadi versi 2 adalah platform yang dirancang untuk
-                                    menampilkan berbagai proyek dan keterampilan saya sebagai seorang pengembang web.
-                                    Dibangun dengan teknologi web modern, website ini menawarkan antarmuka yang menarik,
-                                    navigasi yang mudah, dan informasi yang komprehensif tentang pengalaman dan keahlian
-                                    saya.</p>
-                                <div class="d-flex justify-content-center flex-wrap" style="gap: 10px;">
-                                    <img src="img/logo-html.png" class="img-fluid" alt="HTML Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-css.png" class="img-fluid" alt="CSS Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-php.png" class="img-fluid" alt="PHP Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-js.png" class="img-fluid" alt="JavaScript Logo"
-                                        style="width: 15%; height: auto;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 col-xl-4 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="blog-item">
-                            <div class="blog-img">
-                                <img src="img/app-perpus.png" class="img-fluid w-100" alt="">
-                                <div class="blog-info">
-                                    <span><i class="fa fa-clock"></i> Sep 18.2023</span>
-                                </div>
-                            </div>
-                            <div class="blog-content text-dark border p-4">
-                                <h4 class="mb-4 fw-bold">Aplikasi Perpustakaan</h4>
-                                <p class="mb-4">Project pembuatan Aplikasi Perpustakaan adalah platform digital yang
-                                    dirancang
-                                    untuk mempermudah pengelolaan dan akses koleksi buku di perpustakaan. Aplikasi ini
-                                    dibangun
-                                    dengan menggunakan teknologi web modern, menawarkan antarmuka yang intuitif
-                                    dan fitur-fitur yang lengkap untuk pengguna dan pengelola perpustakaan.</p>
-                                <div class="d-flex justify-content-center flex-wrap" style="gap: 10px;">
-                                    <img src="img/logo-html.png" class="img-fluid" alt="HTML Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-css.png" class="img-fluid" alt="CSS Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-php.png" class="img-fluid" alt="PHP Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-js.png" class="img-fluid" alt="JavaScript Logo"
-                                        style="width: 15%; height: auto;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row g-4 justify-content-center">
-                    <div class="col-md-6 col-lg-4 col-xl-4 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="blog-item">
-                            <div class="blog-img">
-                                <img src="img/Mockup-husqy.png" class="img-fluid w-100" alt="">
-                                <div class="blog-info">
-                                    <span><i class="fa fa-clock"></i> Jan 16.2024</span>
-                                </div>
-                            </div>
-                            <div class="blog-content text-dark border p-4">
-                                <h4 class="mb-4 fw-bold">UI/UX Design Aplikasi Husqy Pets</h4>
-                                <p class="mb-4">Desain UI/UX untuk aplikasi Husqy Pets merupakan aplikasi
-                                    penjualan perlengkapan kebutuhan kucing dan anjing, selain itu juga
-                                    menyediakan jasa grooming, cat hotel, dan konsultasi kesehatan hewan. Desain
-                                    UI/UX ini
-                                    juga telah masuk pada publikasi jurnal yang dapat dilihat <a
-                                        href="https://jurnalhafasy.com/index.php/msj/article/view/152"
-                                        target="_blank">disini</a>.</p>
-                                <div class="d-flex justify-content-center flex-wrap" style="gap: 10px;">
-                                    <img src="img/logo-figma.png" class="img-fluid" alt="HTML Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-canva.png" class="img-fluid" alt="CSS Logo"
-                                        style="width: 15%; height: auto;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 col-xl-4 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="blog-item">
-                            <div class="blog-img">
-                                <img src="img/Mockup-liber.png" class="img-fluid w-100" alt="">
-                                <div class="blog-info">
-                                    <span><i class="fa fa-clock"></i> Aug 05.2023</span>
-                                </div>
-                            </div>
-                            <div class="blog-content text-dark border p-4">
-                                <h4 class="mb-4 fw-bold">UI/UX Design Aplikasi LiBer</h4>
-                                <p class="mb-4">Desain UI/UX untuk aplikasi LiBer merupakan aplikasi
-                                    platform inovatif yang dirancang untuk pengelolaan dan pengumpulan sampah di daerah
-                                    tertentu.
-                                    Dengan memanfaatkan teknologi terkini, aplikasi ini memudahkan pengguna dalam
-                                    melaporkan dan mengatur sampah,
-                                    serta meningkatkan kesadaran akan pentingnya kebersihan dan daur ulang.
-                                </p>
-                                <div class="d-flex justify-content-center flex-wrap" style="gap: 10px;">
-                                    <img src="img/logo-figma.png" class="img-fluid" alt="HTML Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-canva.png" class="img-fluid" alt="CSS Logo"
-                                        style="width: 15%; height: auto;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 col-xl-4 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="blog-item">
-                            <div class="blog-img">
-                                <img src="img/Mockup-sumikan.png" class="img-fluid w-100" alt="">
-                                <div class="blog-info">
-                                    <span><i class="fa fa-clock"></i> Des 07.2023</span>
-                                </div>
-                            </div>
-                            <div class="blog-content text-dark border p-4">
-                                <h4 class="mb-4 fw-bold">UI/UX Design Aplikasi SUMIKAN</h4>
-                                <p class="mb-4">Desain UI/UX untuk aplikasi SUMIKAN merupakan aplikasi
-                                    penjualan ikan yang terintegrasi dengan Google Maps merupakan
-                                    solusi inovatif yang secara efektif memfasilitasi pembelian dan
-                                    penjualan ikan serta memperluas jangkauan pasar. Aplikasi ini
-                                    dikembangkan dengan menggunakan metode design thinking untuk
-                                    memahami kebutuhan pengguna dan memberikan pengalaman
-                                    pengguna yang optimal.</p>
-                                <div class="d-flex justify-content-center flex-wrap" style="gap: 10px;">
-                                    <img src="img/logo-figma.png" class="img-fluid" alt="HTML Logo"
-                                        style="width: 15%; height: auto;">
-                                    <img src="img/logo-canva.png" class="img-fluid" alt="CSS Logo"
-                                        style="width: 15%; height: auto;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-    </section>
-    <!-- Blog End -->
 
-
-    <!-- Service -->
-    <section id="service">
-        <div class="container-fluid FAQ bg-light overflow-hidden py-5">
-            <div class="container py-5">
-                <div class="text-center mx-auto mb-0 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 900px;">
-                    <h4 class="text" style="color: #004aad;">Service</h4>
-                    <h3 class="display-8 mb-2 fw-bold">What Can I Do</h3>
-                </div>
-                <div class="row g-5 align-items-center flex-column-reverse flex-lg-row">
-                    <div class="col-lg-6 wow fadeInLeft" data-wow-delay="0.1s">
-                        <div class="accordion" id="accordionExample">
-                            <div class="accordion-item border-0 mb-4">
-                                <h2 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button rounded-top" type="button" data-bs-toggle="collapse"
-                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseTOne">
-                                        What does a Web Developer do?
-                                    </button>
-                                </h2>
-                                <div id="collapseOne" class="accordion-collapse collapse show"
-                                    aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body my-2">
-                                        <h5>Web Developer</h5>
-                                        <p>Web developer bertanggung jawab untuk merancang, mengembangkan, dan
-                                            memelihara situs web.
-                                            Bekerja dengan berbagai bahasa pemrograman dan alat untuk menciptakan
-                                            antarmuka yang menarik dan fungsional,
-                                            memastikan situs berjalan dengan baik di berbagai perangkat. </p>
-                                        <p>Selain itu, juga mengoptimalkan kinerja situs, mengelola basis data,
-                                            dan memastikan keamanan serta aksesibilitas bagi pengguna.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item border-0 mb-4">
-                                <h2 class="accordion-header" id="headingTwo">
-                                    <button class="accordion-button collapsed rounded-top" type="button"
-                                        data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false"
-                                        aria-controls="collapseTwo">
-                                        Why do we need a UI/UX Designer?
-                                    </button>
-                                </h2>
-                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
-                                    data-bs-parent="#accordionExample">
-                                    <div class="accordion-body my-2">
-                                        <h5>UI/UX Designer</h5>
-                                        <p>UI/UX Designer diperlukan untuk menciptakan pengalaman pengguna yang optimal
-                                            dan menarik pada suatu produk digital. Perancang UI/UX berfokus pada desain
-                                            antarmuka yang intuitif
-                                            dan estetis, serta melakukan penelitian untuk memahami kebutuhan pengguna.
-                                        </p>
-                                        <p>Dengan demikian, dapat membantu meningkatkan kepuasan pengguna,
-                                            meminimalkan kebingungan, dan mendorong interaksi yang lebih baik,
-                                            yang pada akhirnya dapat meningkatkan konversi dan loyalitas pelanggan.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item border-0">
-                                <h2 class="accordion-header" id="headingThree">
-                                    <button class="accordion-button collapsed rounded-top" type="button"
-                                        data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false"
-                                        aria-controls="collapseThree">
-                                        What do Graphic Designers & Video Editing do?
-                                    </button>
-                                </h2>
-                                <div id="collapseThree" class="accordion-collapse collapse"
-                                    aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body my-2">
-                                        <h5>Desain Grafis & Editing Video</h5>
-                                        <p>Desain grafis dan editing video melibatkan berbagai tugas kreatif,
-                                            seperti merancang visual untuk media cetak dan digital, desain sosial media,
-                                            serta mengedit
-                                            dan memproduksi video untuk berbagai platform. Pada bidang ini bekerja
-                                            dengan perangkat lunak
-                                            desain untuk menghasilkan konten yang menarik dan komunikatif, serta
-                                            memastikan bahwa elemen visual
-                                            dan audio selaras untuk menyampaikan pesan yang efektif kepada audiens.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 wow fadeInRight" data-wow-delay="0.3s">
-                        <div class="FAQ-img RotateMoveRight rounded">
-                            <img src="img/foto-profil1.png" class="img-fluid w-100" alt="">
-                        </div>
+                    <h6 class="fw-bold">Teknologi yang Digunakan</h6>
+                    <div class="tech-icons-container mt-2">
+                        <img src="img/logo-html.png" class="tech-icon-img" alt="HTML"><img src="img/logo-css.png" class="tech-icon-img" alt="CSS"><img src="img/logo-php.png" class="tech-icon-img" alt="PHP"><img src="img/logo-js.png" class="tech-icon-img" alt="JS"><img src="img/logo-ci.png" class="tech-icon-img" alt="CI">
                     </div>
                 </div>
+                <div class="modal-footer"><button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Tutup</button></div>
             </div>
         </div>
-    </section>
-    <!-- Service End -->
+    </div>
 
+    <!-- Modal 3: RME -->
+    <div class="modal fade" id="modalProject3" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Aplikasi RME (Evomedis)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="fw-bold mb-2">Deskripsi Project</h6>
+                    <p class="mb-4">Project pengembangan Evomedis difokuskan pada digitalisasi rekam medis di fasilitas kesehatan. Sistem ini mengamankan dan merapikan histori pasien sehingga tenaga medis dapat mengakses informasi dengan cepat.</p>
+                    
+                    <h6 class="fw-bold mb-2">Tampilan Utama</h6>
+                    <div class="mb-4 mockup-top-grid">
+                        <img src="img/app-rme.png" alt="Mockup Utama RME">
+                    </div>
 
-    <!-- Footer Start -->
-    <section id="information">
-        <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
-            <div class="container py-5">
-                <div class="row g-5">
-                    <!-- Form Section Start -->
-                    <div class="col-md-12 col-lg-4 col-xl-6">
-                        <!-- Alert -->
-                        <div class="alert alert-info alert-dismissible fade show d-none my-alert" role="alert">
-                            <strong>Thank you for your suggestions!</strong> I appreciate your feedback.
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                        <!-- Form pengisian data -->
-                        <form name="nouval-contact-form" onsubmit="sendToWhatsApp(event)">
-                            <div class="row">
-                                <div class="col-md-12 mb-3">
-                                    <label for="name" class="form-label">Nama</label>
-                                    <input type="text" class="form-control" id="name" name="nama" required>
+                    <h6 class="fw-bold mb-2">Tampilan Lainnya</h6>
+                    <div id="carouselProject3" class="carousel slide mb-4" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/app-rme.png" class="d-block w-100" alt="Slide 1 Foto 1"></div>
+                                    <div class="col-6"><img src="img/app-rme.png" class="d-block w-100" alt="Slide 1 Foto 2"></div>
                                 </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="pesan" class="form-label">Saran & Masukan</label>
-                                <textarea class="form-control" id="pesan" rows="3" name="pesan"
-                                    placeholder="Saran dan Masukan..." required></textarea>
-                            </div>
-                            <button type="submit" class="btn-kirim rounded-pill py-2 px-5"
-                                style="background-color: #004aad; color: #fff; border: 2px solid #004aad; transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;">
-                                Kirim
-                            </button>
-                            <button class="btn btn-dark btn-loading d-none" type="button" disabled>
-                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                Loading...
-                            </button>
-                        </form>
-                    </div>
-                    <!-- Form Section End -->
-                    <div class="col-md-6 col-lg-4 col-xl-3">
-                        <div class="footer-item d-flex flex-column">
-                            <h4 class="text-dark mb-4">Quick Links</h4>
-                            <a href="#home"> Home</a>
-                            <a href="#about"> About</a>
-                            <a href="#skills"> Skills</a>
-                            <a href="#project"> Project</a>
-                            <a href="#service"> Service</a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 col-xl-3">
-                        <div class="footer-item d-flex flex-column">
-                            <h4 class="mb-4 text-dark">Contact Info</h4>
-                            <a href="https://www.google.com/maps/place/Tuban,+Kec.+Tuban,+Kabupaten+Tuban,+Jawa+Timur/@-6.8933652,112.0016667,13z/data=!3m1!4b1!4m6!3m5!1s0x2e77a2c48649d9c1:0x14db680216ccc11d!8m2!3d-6.8949099!4d112.0416754!16zL20vMGQyMWpm?entry=ttu"
-                                target="_blank"><i class="fa fa-map-marker-alt me-2"></i> Tuban, Jawa Timur</a>
-                            <a href="mailto:nouvallazuardy@gmail.com" target="_blank"><i
-                                    class="fas fa-envelope me-2"></i> nouvallazuardy@gmail.com</a>
-                            <a href="tel:+6283119036831"><i class="fas fa-phone me-2"></i> +62 831 1903 6831</a>
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-share fa-2x text-secondary me-2"></i>
-                                <a class="btn-square btn btn-primary rounded-circle mx-1"
-                                    href="https://www.tiktok.com/@nouvallaz?_t=8opiMQSMEV8&_r=1" target="_blank"><i
-                                        class="fab fa-tiktok"></i></a>
-                                <a class="btn-square btn btn-primary rounded-circle mx-1"
-                                    href="https://www.instagram.com/nouval23_?igsh=MTl1ODVha3oyNHR2OA=="
-                                    target="_blank"><i class="fab fa-instagram"></i></a>
-                                <a class="btn-square btn btn-primary rounded-circle mx-1"
-                                    href="https://www.linkedin.com/in/nouval-lazuardy-a131632b0/" target="_blank"><i
-                                        class="fab fa-linkedin-in"></i></a>
+                            <div class="carousel-item">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/app-rme.png" class="d-block w-100" alt="Slide 2 Foto 1"></div>
+                                    <div class="col-6"><img src="img/app-rme.png" class="d-block w-100" alt="Slide 2 Foto 2"></div>
+                                </div>
                             </div>
                         </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselProject3" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselProject3" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+                    </div>
+
+                    <h6 class="fw-bold">Teknologi yang Digunakan</h6>
+                    <div class="tech-icons-container mt-2">
+                        <img src="img/logo-html.png" class="tech-icon-img" alt="HTML"><img src="img/logo-css.png" class="tech-icon-img" alt="CSS"><img src="img/logo-php.png" class="tech-icon-img" alt="PHP"><img src="img/logo-js.png" class="tech-icon-img" alt="JS"><img src="img/logo-ci.png" class="tech-icon-img" alt="CI">
                     </div>
                 </div>
+                <div class="modal-footer"><button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Tutup</button></div>
             </div>
         </div>
-    </section>
-    <!-- Footer End -->
+    </div>
 
-
-    <!-- Copyright Start -->
-    <div class="container-fluid copyright py-4">
-        <div class="container">
-            <div class="row g-4 align-items-center">
-                <div class="col-md-6 text-center text-md-start mb-md-0">
-                    <span class="text-white" style="margin-left: 0.5%; "><i
-                            class="fas fa-copyright text-secondary me-1"></i><a
-                            href="https://www.instagram.com/nouval23_?igsh=MTl1ODVha3oyNHR2OA==" target="_blank"
-                            class="text-secondary">Nouval Lazuardy</a>, All rights reserved 2024.</span>
+    <!-- Modal 4: Portofolio v1 -->
+    <div class="modal fade" id="modalProject4" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Personal Portofolio v1</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="col-md-6 text-center text-md-end text-white">
-                    <span id="time"></span><br>
-                    <span id="date"></span>
+                <div class="modal-body">
+                    <h6 class="fw-bold mb-2">Deskripsi Project</h6>
+                    <p class="mb-4">Merupakan awal mula digitalisasi portofolio saya. Menampilkan struktur dasar dan skill yang saya miliki. Desain berfokus pada kesederhanaan dan aksesibilitas web dasar.</p>
+                    
+                    <h6 class="fw-bold mb-2">Tampilan Utama</h6>
+                    <div class="mb-4 mockup-top-grid">
+                        <img src="img/app-portov1.png" alt="Mockup Utama Porto v1">
+                    </div>
+
+                    <h6 class="fw-bold mb-2">Tampilan Lainnya</h6>
+                    <div id="carouselProject4" class="carousel slide mb-4" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/app-portov1.png" class="d-block w-100" alt="Slide 1 Foto 1"></div>
+                                    <div class="col-6"><img src="img/app-portov1.png" class="d-block w-100" alt="Slide 1 Foto 2"></div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/app-portov1.png" class="d-block w-100" alt="Slide 2 Foto 1"></div>
+                                    <div class="col-6"><img src="img/app-portov1.png" class="d-block w-100" alt="Slide 2 Foto 2"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselProject4" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselProject4" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+                    </div>
+
+                    <h6 class="fw-bold">Teknologi yang Digunakan</h6>
+                    <div class="tech-icons-container mt-2">
+                        <img src="img/logo-html.png" class="tech-icon-img" alt="HTML"><img src="img/logo-css.png" class="tech-icon-img" alt="CSS"><img src="img/logo-php.png" class="tech-icon-img" alt="PHP"><img src="img/logo-js.png" class="tech-icon-img" alt="JS">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="https://githubnouval23.github.io/Website-Portofolio" target="_blank" class="btn btn-modern rounded-pill">Live Demo</a>
+                    <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Tutup</button>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Copyright End -->
 
-    <!-- Back to Top -->
-    <a href="#home" class="btn btn-dark btn-lg-square back-to-top"
-        style="position: fixed; bottom: 4%; left: 0px; z-index: 1000;">
-        <i class="fa fa-arrow-up"></i>
-    </a>
+    <!-- Modal 5: Portofolio v2 -->
+    <div class="modal fade" id="modalProject5" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Personal Portofolio v2</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="fw-bold mb-2">Deskripsi Project</h6>
+                    <p class="mb-4">Upgrade dari portofolio sebelumnya. Menggunakan styling yang lebih modern, layout yang lebih kompleks, dan animasi interaktif untuk memberikan kesan profesional.</p>
+                    
+                    <h6 class="fw-bold mb-2">Tampilan Utama</h6>
+                    <div class="mb-4 mockup-top-grid">
+                        <img src="img/porto-v2.png" alt="Mockup Utama Porto v2">
+                    </div>
+
+                    <h6 class="fw-bold mb-2">Tampilan Lainnya</h6>
+                    <div id="carouselProject5" class="carousel slide mb-4" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/porto-v2.png" class="d-block w-100" alt="Slide 1 Foto 1"></div>
+                                    <div class="col-6"><img src="img/porto-v2.png" class="d-block w-100" alt="Slide 1 Foto 2"></div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/porto-v2.png" class="d-block w-100" alt="Slide 2 Foto 1"></div>
+                                    <div class="col-6"><img src="img/porto-v2.png" class="d-block w-100" alt="Slide 2 Foto 2"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselProject5" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselProject5" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+                    </div>
+
+                    <h6 class="fw-bold">Teknologi yang Digunakan</h6>
+                    <div class="tech-icons-container mt-2">
+                        <img src="img/logo-html.png" class="tech-icon-img" alt="HTML"><img src="img/logo-css.png" class="tech-icon-img" alt="CSS"><img src="img/logo-php.png" class="tech-icon-img" alt="PHP"><img src="img/logo-js.png" class="tech-icon-img" alt="JS">
+                    </div>
+                </div>
+                <div class="modal-footer"><button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Tutup</button></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 6: Perpustakaan -->
+    <div class="modal fade" id="modalProject6" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">Aplikasi Perpustakaan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="fw-bold mb-2">Deskripsi Project</h6>
+                    <p class="mb-4">Membantu pustakawan dalam mendata buku masuk, buku keluar, hingga sistem peminjaman yang otomatis menghitung denda keterlambatan secara digital.</p>
+                    
+                    <h6 class="fw-bold mb-2">Tampilan Utama</h6>
+                    <div class="mb-4 mockup-top-grid">
+                        <img src="img/app-perpus.png" alt="Mockup Utama Perpus">
+                    </div>
+
+                    <h6 class="fw-bold mb-2">Tampilan Lainnya</h6>
+                    <div id="carouselProject6" class="carousel slide mb-4" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/app-perpus.png" class="d-block w-100" alt="Slide 1 Foto 1"></div>
+                                    <div class="col-6"><img src="img/app-perpus.png" class="d-block w-100" alt="Slide 1 Foto 2"></div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/app-perpus.png" class="d-block w-100" alt="Slide 2 Foto 1"></div>
+                                    <div class="col-6"><img src="img/app-perpus.png" class="d-block w-100" alt="Slide 2 Foto 2"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselProject6" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselProject6" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+                    </div>
+
+                    <h6 class="fw-bold">Teknologi yang Digunakan</h6>
+                    <div class="tech-icons-container mt-2">
+                        <img src="img/logo-html.png" class="tech-icon-img" alt="HTML"><img src="img/logo-css.png" class="tech-icon-img" alt="CSS"><img src="img/logo-php.png" class="tech-icon-img" alt="PHP"><img src="img/logo-js.png" class="tech-icon-img" alt="JS">
+                    </div>
+                </div>
+                <div class="modal-footer"><button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Tutup</button></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 7: Husqy Pets Versi Mobile App-->
+    <div class="modal fade" id="modalProject7" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">UI/UX Husqy Pets App (Mobile)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="fw-bold mb-2">Deskripsi Project</h6>
+                    <p class="mb-4">Purwarupa desain antarmuka layanan Pet Shop, dilengkapi alur pemesanan Grooming, Pet Hotel, serta marketplace kebutuhan hewan. Penelitian terkait UI ini berhasil terpublikasi di jurnal akademik.</p>
+                    
+                    <h6 class="fw-bold mb-2">Tampilan Utama</h6>
+                    <div class="mb-4 mockup-top-grid">
+                        <img src="img/Mockup-husqy.png" alt="Mockup Utama Husqy">
+                    </div>
+
+                    <h6 class="fw-bold mb-2">Tampilan Lainnya</h6>
+                    <div id="carouselProject7" class="carousel slide mb-4" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/pets-6.png" class="d-block w-100" alt="Slide 1 Foto 1"></div>
+                                    <div class="col-6"><img src="img/pets-5.png" class="d-block w-100" alt="Slide 1 Foto 2"></div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/pets-4.png" class="d-block w-100" alt="Slide 2 Foto 1"></div>
+                                    <div class="col-6"><img src="img/pets-3.png" class="d-block w-100" alt="Slide 2 Foto 2"></div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/pets-1.png" class="d-block w-100" alt="Slide 2 Foto 1"></div>
+                                    <div class="col-6"><img src="img/pets-2.png" class="d-block w-100" alt="Slide 2 Foto 2"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselProject7" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselProject7" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+                    </div>
+
+                    <h6 class="fw-bold">Teknologi yang Digunakan</h6>
+                    <div class="tech-icons-container mt-2">
+                        <img src="img/logo-figma.png" class="tech-icon-img" alt="Figma"><img src="img/logo-canva.png" class="tech-icon-img" alt="Canva">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="https://jurnalhafasy.com/index.php/msj/article/view/152" target="_blank" class="btn btn-modern rounded-pill">Lihat Jurnal</a>
+                    <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 8: LiBer -->
+    <div class="modal fade" id="modalProject8" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">UI/UX Aplikasi LiBer</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="fw-bold mb-2">Deskripsi Project</h6>
+                    <p class="mb-4">Aplikasi LiBer berfokus pada masalah lingkungan (Lingkungan Bersih). Konsep desain UI/UX-nya dirancang agar masyarakat lebih mudah melaporkan tumpukan sampah liar dan memanggil petugas kebersihan.</p>
+                    
+                    <h6 class="fw-bold mb-2">Tampilan Utama</h6>
+                    <div class="mb-4 mockup-top-grid">
+                        <img src="img/Mockup-liber.png" alt="Mockup Utama LiBer">
+                    </div>
+
+                    <h6 class="fw-bold mb-2">Tampilan Lainnya</h6>
+                    <div id="carouselProject8" class="carousel slide mb-4" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/Mockup-liber.png" class="d-block w-100" alt="Slide 1 Foto 1"></div>
+                                    <div class="col-6"><img src="img/Mockup-liber.png" class="d-block w-100" alt="Slide 1 Foto 2"></div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/Mockup-liber.png" class="d-block w-100" alt="Slide 2 Foto 1"></div>
+                                    <div class="col-6"><img src="img/Mockup-liber.png" class="d-block w-100" alt="Slide 2 Foto 2"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselProject8" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselProject8" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+                    </div>
+
+                    <h6 class="fw-bold">Teknologi yang Digunakan</h6>
+                    <div class="tech-icons-container mt-2">
+                        <img src="img/logo-figma.png" class="tech-icon-img" alt="Figma"><img src="img/logo-canva.png" class="tech-icon-img" alt="Canva">
+                    </div>
+                </div>
+                <div class="modal-footer"><button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Tutup</button></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 9: SUMIKAN -->
+    <div class="modal fade" id="modalProject9" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">UI/UX Aplikasi SUMIKAN</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="fw-bold mb-2">Deskripsi Project</h6>
+                    <p class="mb-4">SUMIKAN adalah konsep aplikasi e-commerce hasil laut. Desain UX dirancang menggunakan metode *Design Thinking* agar pembeli dan nelayan dapat bertransaksi berbasis integrasi Google Maps.</p>
+                    
+                    <h6 class="fw-bold mb-2">Tampilan Utama</h6>
+                    <div class="mb-4 mockup-top-grid">
+                        <img src="img/Mockup-sumikan.png" alt="Mockup Utama SUMIKAN">
+                    </div>
+
+                    <h6 class="fw-bold mb-2">Tampilan Lainnya</h6>
+                    <div id="carouselProject9" class="carousel slide mb-4" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/sumikan-1.png" class="d-block w-100" alt="Slide 1 Foto 1"></div>
+                                    <div class="col-6"><img src="img/sumikan-2.png" class="d-block w-100" alt="Slide 1 Foto 2"></div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/sumikan-3.png" class="d-block w-100" alt="Slide 2 Foto 1"></div>
+                                    <div class="col-6"><img src="img/sumikan-4.png" class="d-block w-100" alt="Slide 2 Foto 2"></div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/sumikan-5.png" class="d-block w-100" alt="Slide 3 Foto 1"></div>
+                                    <div class="col-6"><img src="img/sumikan-4.png" class="d-block w-100" alt="Slide 3 Foto 2"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselProject9" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselProject9" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+                    </div>
+
+                    <h6 class="fw-bold">Teknologi yang Digunakan</h6>
+                    <div class="tech-icons-container mt-2">
+                        <img src="img/logo-figma.png" class="tech-icon-img" alt="Figma"><img src="img/logo-canva.png" class="tech-icon-img" alt="Canva">
+                    </div>
+                </div>
+                <div class="modal-footer"><button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Tutup</button></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 11: Husqy Pets Web-->
+    <div class="modal fade" id="modalProject11" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold">UI/UX Husqy Pets (Website)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="fw-bold mb-2">Deskripsi Project</h6>
+                    <p class="mb-4">Purwarupa desain antarmuka layanan Pet Shop versi Website, dilengkapi alur pemesanan Grooming, Pet Hotel, serta marketplace kebutuhan hewan. Penelitian terkait UI ini berhasil terpublikasi di jurnal akademik.</p>
+                    
+                    <h6 class="fw-bold mb-2">Tampilan Utama</h6>
+                    <div class="mb-4 mockup-top-grid">
+                        <img src="img/webpets-4.png" alt="Mockup Utama Husqy">
+                    </div>
+
+                    <h6 class="fw-bold mb-2">Tampilan Lainnya</h6>
+                    <div id="carouselProject7" class="carousel slide mb-4" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/webpets-4.png" class="d-block w-100" alt="Slide 1 Foto 1"></div>
+                                    <div class="col-6"><img src="img/webpets-1.png" class="d-block w-100" alt="Slide 1 Foto 2"></div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/webpets-3.png" class="d-block w-100" alt="Slide 2 Foto 1"></div>
+                                    <div class="col-6"><img src="img/webpets-2.png" class="d-block w-100" alt="Slide 2 Foto 2"></div>
+                                </div>
+                            </div>
+                            <div class="carousel-item">
+                                <div class="row g-2">
+                                    <div class="col-6"><img src="img/webpets-5.png" class="d-block w-100" alt="Slide 2 Foto 1"></div>
+                                    <div class="col-6"><img src="img/webpets-4.png" class="d-block w-100" alt="Slide 2 Foto 2"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselProject7" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselProject7" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
+                    </div>
+
+                    <h6 class="fw-bold">Teknologi yang Digunakan</h6>
+                    <div class="tech-icons-container mt-2">
+                        <img src="img/logo-figma.png" class="tech-icon-img" alt="Figma"><img src="img/logo-canva.png" class="tech-icon-img" alt="Canva">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="https://jurnalhafasy.com/index.php/msj/article/view/152" target="_blank" class="btn btn-modern rounded-pill">Lihat Jurnal</a>
+                    <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-    <!-- JavaScript Libraries -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/counterup/counterup.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
-
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
-
-    <!-- JavaScript Tambahan -->
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        function updateDateTime() {
-            const timeElement = document.getElementById('time');
-            const dateElement = document.getElementById('date');
-            const now = new Date();
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        // LOADING HALAMAN (RELOAD / REFRESH)
+        window.addEventListener('load', function() {
+            const pageLoader = document.getElementById('pageLoader');
+            setTimeout(() => {
+                pageLoader.style.opacity = '0';
+                pageLoader.style.visibility = 'hidden';
+            }, 600);
+        });
 
-            const hours = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            const formattedTime = `${hours}:${minutes}`;
-
-            const formattedDate = now.toLocaleDateString('id-ID', options);
-
-            timeElement.textContent = formattedTime;
-            dateElement.textContent = formattedDate;
+        // DARK MODE
+        const darkModeBtn = document.getElementById('darkModeBtn');
+        const darkModeIcon = document.getElementById('darkModeIcon');
+        
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            darkModeIcon.classList.replace('fa-moon', 'fa-sun');
         }
 
-        setInterval(updateDateTime, 1000);
-
-        updateDateTime();
-    </script>
-
-    <script>
-        document.querySelector('.btn-information').addEventListener('mouseover', function () {
-            this.style.backgroundColor = '#004aad';
-            this.style.color = '#fff';  /* Optional: Mengubah warna teks menjadi putih saat di-hover */
-            this.style.borderColor = '#004aad'; /* Optional: Mengubah warna border menjadi biru */
+        darkModeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            document.body.classList.remove('theme-switching');
+            void document.body.offsetWidth;
+            document.body.classList.add('theme-switching');
+            setTimeout(() => document.body.classList.remove('theme-switching'), 650);
+            if (document.body.classList.contains('dark-mode')) {
+                darkModeIcon.classList.replace('fa-moon', 'fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                darkModeIcon.classList.replace('fa-sun', 'fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
         });
 
-        document.querySelector('.btn-information').addEventListener('mouseout', function () {
-            this.style.backgroundColor = '';
-            this.style.color = '#004aad';  /* Mengembalikan warna teks */
-            this.style.borderColor = ''; /* Mengembalikan warna border */
-        });
-    </script>
-
-    <script>
-        document.querySelector('.btn-biru').addEventListener('mouseover', function () {
-            this.style.backgroundColor = 'transparent';
-            this.style.color = '#004aad';
-            this.style.borderColor = '#004aad';
-        });
-
-        document.querySelector('.btn-biru').addEventListener('mouseout', function () {
-            this.style.backgroundColor = '#004aad';
-            this.style.color = '#fff';
-            this.style.borderColor = '#004aad';
-        });
-    </script>
-    <script>
-        document.querySelector('.btn-more').addEventListener('mouseover', function () {
-            this.style.backgroundColor = 'transparent';
-            this.style.color = '#004aad';
-            this.style.borderColor = '#004aad';
-        });
-
-        document.querySelector('.btn-more').addEventListener('mouseout', function () {
-            this.style.backgroundColor = '#004aad';
-            this.style.color = '#fff';
-            this.style.borderColor = '#004aad';
-        });
-    </script>
-    <script>
-        document.querySelector('.btn-kirim').addEventListener('mouseover', function () {
-            this.style.backgroundColor = 'transparent';
-            this.style.color = '#004aad';
-            this.style.borderColor = '#004aad';
-        });
-
-        document.querySelector('.btn-kirim').addEventListener('mouseout', function () {
-            this.style.backgroundColor = '#004aad';
-            this.style.color = '#fff';
-            this.style.borderColor = '#004aad';
-        });
-    </script>
-
-    <script>
-        const navLinks = document.querySelectorAll('.warna-nav');
-
-        navLinks.forEach(function (link) {
-            link.addEventListener('mouseover', function () {
-                this.style.color = '#004aad';
-                this.style.borderColor = '#004aad';  
-            });
-
-            link.addEventListener('mouseout', function () {
-                this.style.color = ''; 
-                this.style.borderColor = '';  
-            });
-
-            link.addEventListener('click', function () {
-                this.style.color = '#004aad';
-                this.style.borderColor = '#004aad';
-            });
-        });
-    </script>
-    <script>
+        // WHATSAPP FORM
         function sendToWhatsApp(event) {
-            event.preventDefault(); // Mencegah form dari submit default
-
-            var name = document.getElementById('name').value;
-            var message = document.getElementById('pesan').value;
-            var phoneNumber = "6283119036831";
-
-            // Buat URL untuk mengirim pesan ke WhatsApp
-            var url = `https://wa.me/${phoneNumber}?text=Halo,%20nama%20saya%20${name}.%20Masukkan:%20${message}`;
-
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const message = document.getElementById('pesan').value;
+            const url = `https://wa.me/6283119036831?text=Halo,%20nama%20saya%20${encodeURIComponent(name)}.%0A%0ASaran & Masukan:%0A${encodeURIComponent(message)}`;
             window.open(url, '_blank');
-
-            var alertElement = document.querySelector('.my-alert');
-            alertElement.classList.remove('d-none');
-            alertElement.classList.add('show');
         }
+
+        // HARI & JAM REALTIME
+        function updateDateTime() {
+            const now = new Date();
+            
+            // Format Hari & Tanggal
+            const options = { weekday: 'long', day: 'numeric', month: 'short', year: 'numeric' };
+            const dateString = now.toLocaleDateString('id-ID', options);
+            
+            // Format Jam (Contoh: 14:35)
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const timeString = `${hours}:${minutes} WIB`;
+
+            document.getElementById('liveTime').innerText = `${dateString} | ${timeString}`;
+        }
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+
+        // LOADING ROBOT SAAT KLIK PROJECT
+        document.querySelectorAll('.project-trigger').forEach(card => {
+            card.addEventListener('click', function(e) {
+                e.preventDefault();
+                const modalId = this.getAttribute('data-modal-target');
+                const loader = document.getElementById('projectLoader');
+                
+                loader.style.display = 'flex';
+                
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    const myModal = new bootstrap.Modal(document.getElementById(modalId));
+                    myModal.show();
+                }, 800);
+            });
+        });
     </script>
 </body>
 
