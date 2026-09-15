@@ -333,11 +333,57 @@
         .dark-mode .standby-footer { background: var(--card-bg); border: 1px solid var(--border-color); color: var(--text-main); }
         #darkModeBtn { background: none; border: none; color: inherit; font-size: 1.2rem; cursor: pointer; }
 
+        /* ========================================================== */
+        /* === PERBAIKAN RESPONSIVE LAYOUT UNTUK MOBILE (FIX OVERFLOW)=== */
+        /* ========================================================== */
         @media (max-width: 991px) {
             .hero-title { font-size: 3rem; }
-            .floating-nav { width: 90%; justify-content: space-between; padding: 10px 20px; }
-            .nav-text-links { display: none; } 
-            .standby-footer { width: 85%; justify-content: center; font-size: 0.8rem; }
+            
+            /* FIX: Memperbaiki Navbar agar tidak meluap (overflow) dari layar */
+            .floating-nav { 
+                width: 92%; 
+                padding: 10px 15px;
+                justify-content: flex-start; /* Menyusun elemen dari kiri */
+                gap: 15px; 
+                overflow-x: auto; /* Mengaktifkan fitur scroll horizontal jika menu terlalu panjang */
+                -webkit-overflow-scrolling: touch; /* Kelancaran scroll di Safari Mobile */
+            }
+            /* Menyembunyikan bar scrollbar agar terlihat bersih seperti pill */
+            .floating-nav::-webkit-scrollbar {
+                display: none;
+            }
+            
+            /* FIX: Meng-override class d-flex yang mencegah display:none bekerja */
+            .nav-text-links { 
+                display: flex !important; /* Menjaga link tetap sejajar horizontal */
+                gap: 15px !important; 
+            }
+            .nav-link-custom {
+                font-size: 0.9rem;
+                white-space: nowrap; /* Mencegah teks turun jadi 2 baris / tumpang tindih */
+            }
+            .nav-brand-img {
+                height: 28px; /* Menyesuaikan ukuran logo di layar kecil */
+            }
+            #darkModeBtn {
+                margin-left: auto; /* Jika ada ruang kosong, geser icon ke paling kanan */
+                white-space: nowrap;
+            }
+
+            /* FIX: Memperbaiki Footer yang teksnya tumpang tindih */
+            .standby-footer { 
+                width: 95%; 
+                flex-direction: column; /* Mengubah susunan menjadi atas-bawah */
+                justify-content: center; 
+                font-size: 0.75rem; 
+                text-align: center;
+                gap: 5px;
+                padding: 10px;
+            }
+            .standby-footer div {
+                display: none; /* Menyembunyikan garis pembatas vertikal di HP */
+            }
+
             .about-section { padding: 30px 20px; }
         }
 
@@ -1589,15 +1635,15 @@
             window.open(url, '_blank');
         }
 
-        // HARI & JAM REALTIME
+        // HARI & JAM REALTIME (Footer)
         function updateDateTime() {
             const now = new Date();
             
-            // Format Hari & Tanggal
+            // Format Hari & Tanggal 
             const options = { weekday: 'long', day: 'numeric', month: 'short', year: 'numeric' };
             const dateString = now.toLocaleDateString('id-ID', options);
             
-            // Format Jam (Contoh: 14:35)
+            // Format Jam 
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const timeString = `${hours}:${minutes} WIB`;
