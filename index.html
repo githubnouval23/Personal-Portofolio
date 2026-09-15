@@ -113,11 +113,14 @@
             font-weight: 600;
             font-size: 0.95rem;
             transition: color 0.3s;
+            cursor: pointer;
         }
         .nav-link-custom:hover { color: var(--primary); }
         .nav-brand-img { height: 35px; }
 
-        /* === HOME SECTION === */
+        /* ========================================================== */
+        /* === HOME SECTION & ANIMASI BERKELANJUTAN                 === */
+        /* ========================================================== */
         .hero-section {
             min-height: 100vh;
             display: flex;
@@ -125,14 +128,45 @@
             padding-top: 100px;
             position: relative;
         }
+        
+        /* 1. Nama dengan Gradient Bergerak + Efek Melayang Halus Terus-menerus */
         .hero-title {
             font-size: 4rem;
-            line-height: 1.1;
+            line-height: 1.2;
             letter-spacing: -1.5px;
-            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+            background: linear-gradient(270deg, var(--primary), #8b5cf6, #ec4899, var(--primary));
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: gradientText 6s ease infinite, floatTitle 3s ease-in-out infinite alternate;
+            display: inline-block;
         }
+        @keyframes gradientText {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes floatTitle {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-6px); }
+        }
+
+        /* 2. Kursor untuk Efek Ketik Berkelanjutan */
+        .cursor {
+            display: inline-block;
+            width: 3px;
+            background-color: var(--primary);
+            margin-left: 4px;
+            animation: blink 0.8s step-end infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .hero-subtitle-wrapper {
+            min-height: 55px; 
+        }
+
         .hero-image-wrapper { position: relative; z-index: 1; }
         .hero-image-wrapper img {
             border-radius: 40px;
@@ -157,12 +191,14 @@
             background: var(--primary); color: #fff; padding: 12px 28px;
             border-radius: 50px; font-weight: 600; display: inline-block;
             transition: all 0.3s ease; border: 2px solid var(--primary);
+            cursor: pointer;
         }
         .btn-modern:hover { background: transparent; color: var(--primary); transform: translateY(-3px); }
         .btn-outline-modern {
             background: transparent; color: var(--text-main); padding: 12px 28px;
             border-radius: 50px; font-weight: 600; display: inline-block;
             transition: all 0.3s ease; border: 2px solid var(--border-color);
+            cursor: pointer;
         }
         .btn-outline-modern:hover { border-color: var(--primary); color: var(--primary); }
 
@@ -238,7 +274,22 @@
 
         .dark-mode .btn-close { filter: invert(1) grayscale(100%) brightness(200%); }
 
-        /* === LOADING ROBOT OVERLAY (UNTUK MODAL) === */
+        /* === CANVAS GAME DINOSAURUS  === */
+        #dinoGameCanvas {
+            background: linear-gradient(to bottom, #f1f5f9, #cbd5e1);
+            border-radius: 16px;
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+        }
+        .dark-mode #dinoGameCanvas {
+            background: linear-gradient(to bottom, #1e293b, #0f172a);
+        }
+
+        /* === LOADING ROBOT OVERLAY === */
         #projectLoader {
             display: none;
             position: fixed;
@@ -276,7 +327,7 @@
             100% { transform: translateY(-12px); }
         }
 
-        /* === ACCORDION SERVICES (PERBAIKAN FONT DARK MODE) === */
+        /* === ACCORDION SERVICES === */
         .accordion-item { 
             background: var(--card-bg); 
             border: 1px solid var(--border-color); 
@@ -294,30 +345,13 @@
             color: var(--primary); 
             background: var(--bg-color); 
         }
-        .accordion-body { 
-            color: var(--text-muted); /* Memaksa isi teks accordion menggunakan warna variabel */
-        }
+        .accordion-body { color: var(--text-muted); }
         
-        /* Dark Mode Khusus Accordion */
-        .dark-mode .accordion-button { 
-            background: var(--card-bg); 
-            color: var(--text-main); 
-        }
-        .dark-mode .accordion-button:not(.collapsed) { 
-            background: var(--bg-color); 
-            color: var(--primary); 
-        }
-        .dark-mode .accordion-body { 
-            color: var(--text-muted); 
-        }
-        /* Mengubah warna panah accordion menjadi putih saat dark mode */
-        .dark-mode .accordion-button::after { 
-            filter: invert(1) brightness(200%); 
-        }
-        /* Mengembalikan panah ke biru (primary) saat accordion terbuka (active) */
-        .dark-mode .accordion-button:not(.collapsed)::after { 
-            filter: none; 
-        }
+        .dark-mode .accordion-button { background: var(--card-bg); color: var(--text-main); }
+        .dark-mode .accordion-button:not(.collapsed) { background: var(--bg-color); color: var(--primary); }
+        .dark-mode .accordion-body { color: var(--text-muted); }
+        .dark-mode .accordion-button::after { filter: invert(1) brightness(200%); }
+        .dark-mode .accordion-button:not(.collapsed)::after { filter: none; }
 
         /* === INPUT FORMS === */
         .form-control { background: var(--bg-color); border: 1px solid var(--border-color); color: var(--text-main); border-radius: 15px; padding: 14px 20px; }
@@ -334,73 +368,35 @@
         #darkModeBtn { background: none; border: none; color: inherit; font-size: 1.2rem; cursor: pointer; }
 
         /* ========================================================== */
-        /* === PERBAIKAN RESPONSIVE LAYOUT UNTUK MOBILE (FIX OVERFLOW)=== */
+        /* === RESPONSIVE LAYOUT MOBILE                             === */
         /* ========================================================== */
         @media (max-width: 991px) {
-            .hero-title { font-size: 3rem; }
+            .hero-title { font-size: 2.8rem; }
+            .hero-subtitle-wrapper { min-height: 80px; }
             
-            /* FIX: Memperbaiki Navbar agar tidak meluap (overflow) dari layar */
             .floating-nav { 
                 width: 92%; 
                 padding: 10px 15px;
-                justify-content: flex-start; /* Menyusun elemen dari kiri */
+                justify-content: flex-start; 
                 gap: 15px; 
-                overflow-x: auto; /* Mengaktifkan fitur scroll horizontal jika menu terlalu panjang */
-                -webkit-overflow-scrolling: touch; /* Kelancaran scroll di Safari Mobile */
+                overflow-x: auto; 
+                -webkit-overflow-scrolling: touch; 
             }
-            /* Menyembunyikan bar scrollbar agar terlihat bersih seperti pill */
-            .floating-nav::-webkit-scrollbar {
-                display: none;
-            }
+            .floating-nav::-webkit-scrollbar { display: none; }
             
-            /* FIX: Meng-override class d-flex yang mencegah display:none bekerja */
-            .nav-text-links { 
-                display: flex !important; /* Menjaga link tetap sejajar horizontal */
-                gap: 15px !important; 
-            }
-            .nav-link-custom {
-                font-size: 0.9rem;
-                white-space: nowrap; /* Mencegah teks turun jadi 2 baris / tumpang tindih */
-            }
-            .nav-brand-img {
-                height: 28px; /* Menyesuaikan ukuran logo di layar kecil */
-            }
-            #darkModeBtn {
-                margin-left: auto; /* Jika ada ruang kosong, geser icon ke paling kanan */
-                white-space: nowrap;
-            }
+            .nav-text-links { display: flex !important; gap: 15px !important; }
+            .nav-link-custom { font-size: 0.9rem; white-space: nowrap; }
+            .nav-brand-img { height: 28px; }
+            #darkModeBtn { margin-left: auto; white-space: nowrap; }
 
-            /* FIX: Memperbaiki Footer yang teksnya tumpang tindih */
-            .standby-footer { 
-                width: 95%; 
-                flex-direction: column; /* Mengubah susunan menjadi atas-bawah */
-                justify-content: center; 
-                font-size: 0.75rem; 
-                text-align: center;
-                gap: 5px;
-                padding: 10px;
-            }
-            .standby-footer div {
-                display: none; /* Menyembunyikan garis pembatas vertikal di HP */
-            }
-
+            .standby-footer { width: 85%; justify-content: center; font-size: 0.8rem; }
             .about-section { padding: 30px 20px; }
         }
 
-
-        /* === ANIMATED BACKGROUND — TERANG & GELAP BERBEDA === */
-        body::before,
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: -3;
+        /* === ANIMATED BACKGROUND === */
+        body::before, body::after {
+            content: ''; position: fixed; inset: 0; pointer-events: none; z-index: -3;
         }
-
-        /* ========================================================== */
-        /* === MODE TERANG: AURORA SOFT + GRID + FLOATING DOTS    === */
-        /* ========================================================== */
         body::before {
             background-image:
                 linear-gradient(rgba(0, 74, 173, 0.075) 1px, transparent 1px),
@@ -408,27 +404,21 @@
             background-size: 48px 48px;
             mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
             -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%);
-            opacity: 0.95;
-            animation: lightGridMove 14s linear infinite;
+            opacity: 0.95; animation: lightGridMove 14s linear infinite;
         }
-
         body::after {
             background:
                 radial-gradient(circle at 10% 18%, rgba(246, 59, 181, 0.28) 0 55px, transparent 180px),
                 radial-gradient(circle at 88% 18%, rgba(139,92,246,0.22) 0 60px, transparent 190px),
                 radial-gradient(circle at 76% 76%, rgba(0,74,173,0.18) 0 65px, transparent 210px),
                 radial-gradient(circle at 18% 82%, rgba(14,165,233,0.14) 0 55px, transparent 190px);
-            filter: blur(16px);
-            opacity: 0.9;
-            animation: lightAuroraMove 11s ease-in-out infinite alternate;
+            filter: blur(16px); opacity: 0.9; animation: lightAuroraMove 11s ease-in-out infinite alternate;
         }
-
         @keyframes lightGridMove {
             0%   { transform: translate3d(0, 0, 0); }
             50%  { transform: translate3d(24px, 18px, 0); }
             100% { transform: translate3d(48px, 36px, 0); }
         }
-
         @keyframes lightAuroraMove {
             0%   { transform: translate3d(-2%, -1%, 0) scale(1); }
             25%  { transform: translate3d(2%, 1%, 0) scale(1.05); }
@@ -437,27 +427,14 @@
             100% { transform: translate3d(-3%, 1%, 0) scale(0.99); }
         }
 
-        /* Lapisan titik cahaya khusus mode terang */
         .light-particles {
-            position: fixed;
-            inset: 0;
-            z-index: -2;
-            pointer-events: none;
-            overflow: hidden;
-            opacity: 1;
-            transition: opacity 0.5s ease;
+            position: fixed; inset: 0; z-index: -2; pointer-events: none; overflow: hidden; opacity: 1; transition: opacity 0.5s ease;
         }
-
         .light-particle {
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: rgba(235, 37, 162, 0.849);
-            box-shadow: 0 0 14px rgba(246, 59, 149, 0.564);
+            position: absolute; width: 5px; height: 5px; border-radius: 50%;
+            background: rgba(235, 37, 162, 0.849); box-shadow: 0 0 14px rgba(246, 59, 149, 0.564);
             animation: lightParticleFloat ease-in-out infinite;
         }
-
         .light-particle:nth-child(1) { left: 7%;  top: 28%; animation-duration: 8s;  animation-delay: -2s; }
         .light-particle:nth-child(2) { left: 16%; top: 64%; animation-duration: 10s; animation-delay: -5s; width: 4px; height: 4px; }
         .light-particle:nth-child(3) { left: 29%; top: 18%; animation-duration: 9s;  animation-delay: -6s; }
@@ -474,28 +451,11 @@
             75% { transform: translate3d(14px, -12px, 0) scale(0.95); opacity: 0.45; }
         }
 
-        /* Garis cahaya halus bergerak khusus mode terang */
         .light-streak {
-            position: fixed;
-            top: -15%;
-            left: -20%;
-            width: 45%;
-            height: 140%;
-            z-index: -2;
-            pointer-events: none;
-            background: linear-gradient(
-                110deg,
-                transparent 0%,
-                rgba(59,130,246,0.03) 42%,
-                rgba(59,130,246,0.13) 50%,
-                rgba(139,92,246,0.04) 56%,
-                transparent 68%
-            );
-            filter: blur(10px);
-            transform: rotate(10deg);
-            animation: lightStreakMove 15s ease-in-out infinite;
+            position: fixed; top: -15%; left: -20%; width: 45%; height: 140%; z-index: -2; pointer-events: none;
+            background: linear-gradient(110deg, transparent 0%, rgba(59,130,246,0.03) 42%, rgba(59,130,246,0.13) 50%, rgba(139,92,246,0.04) 56%, transparent 68%);
+            filter: blur(10px); transform: rotate(10deg); animation: lightStreakMove 15s ease-in-out infinite;
         }
-
         @keyframes lightStreakMove {
             0%   { transform: translate3d(-35%, 0, 0) rotate(10deg); opacity: 0; }
             15%  { opacity: 0.8; }
@@ -504,61 +464,29 @@
             100% { transform: translate3d(165%, 0, 0) rotate(10deg); opacity: 0; }
         }
 
-        /* ========================================================== */
-        /* === MODE GELAP: NEON AURA + DIAGONAL SCAN + PARTICLES === */
-        /* ========================================================== */
         .dark-mode::before {
-            background-image:
-                linear-gradient(115deg, transparent 0%, rgba(59,130,246,0.11) 48%, transparent 52%);
-            background-size: 320px 320px;
-            opacity: 0.8;
-            animation: darkScan 10s linear infinite;
+            background-image: linear-gradient(115deg, transparent 0%, rgba(59,130,246,0.11) 48%, transparent 52%);
+            background-size: 320px 320px; opacity: 0.8; animation: darkScan 10s linear infinite;
         }
-
         .dark-mode::after {
             background:
                 radial-gradient(circle at 18% 18%, rgba(59,130,246,0.25) 0 80px, transparent 220px),
                 radial-gradient(circle at 78% 22%, rgba(139,92,246,0.21) 0 90px, transparent 240px),
                 radial-gradient(circle at 72% 76%, rgba(14,165,233,0.16) 0 75px, transparent 210px),
                 radial-gradient(circle at 25% 82%, rgba(59,130,246,0.11) 0 60px, transparent 180px);
-            filter: blur(4px);
-            opacity: 0.95;
-            animation: darkAura 12s ease-in-out infinite alternate;
+            filter: blur(4px); opacity: 0.95; animation: darkAura 12s ease-in-out infinite alternate;
         }
+        @keyframes darkScan { 0% { background-position: -320px -320px; } 100% { background-position: 320px 320px; } }
+        @keyframes darkAura { 0% { transform: translate3d(-1%, 0, 0) scale(1); } 50% { transform: translate3d(1.5%, -1%, 0) scale(1.03); } 100% { transform: translate3d(-1%, 1.5%, 0) scale(0.99); } }
 
-        @keyframes darkScan {
-            0% { background-position: -320px -320px; }
-            100% { background-position: 320px 320px; }
-        }
-
-        @keyframes darkAura {
-            0% { transform: translate3d(-1%, 0, 0) scale(1); }
-            50% { transform: translate3d(1.5%, -1%, 0) scale(1.03); }
-            100% { transform: translate3d(-1%, 1.5%, 0) scale(0.99); }
-        }
-
-        /* Partikel dekoratif khusus dark mode */
         .dark-mode .bg-particles { opacity: 1; }
         .bg-particles {
-            position: fixed;
-            inset: 0;
-            z-index: -2;
-            pointer-events: none;
-            overflow: hidden;
-            opacity: 0;
-            transition: opacity 0.5s ease;
+            position: fixed; inset: 0; z-index: -2; pointer-events: none; overflow: hidden; opacity: 0; transition: opacity 0.5s ease;
         }
-
         .bg-particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: rgba(147,197,253,0.8);
-            box-shadow: 0 0 12px rgba(59,130,246,0.9);
-            animation: particleFloat linear infinite;
+            position: absolute; width: 4px; height: 4px; border-radius: 50%; background: rgba(147,197,253,0.8);
+            box-shadow: 0 0 12px rgba(59,130,246,0.9); animation: particleFloat linear infinite;
         }
-
         .bg-particle:nth-child(1) { left: 8%;  top: 20%; animation-duration: 15s; animation-delay: -4s; }
         .bg-particle:nth-child(2) { left: 18%; top: 72%; animation-duration: 19s; animation-delay: -10s; width: 3px; height: 3px; }
         .bg-particle:nth-child(3) { left: 31%; top: 33%; animation-duration: 17s; animation-delay: -7s; }
@@ -576,55 +504,32 @@
             100% { transform: translate3d(-10px, -140px, 0); opacity: 0; }
         }
 
-        /* Saat dark mode aktif, elemen khusus terang disembunyikan */
-        .dark-mode .light-particles,
-        .dark-mode .light-streak { opacity: 0; }
-
-        /* Efek transisi saat berpindah tema */
+        .dark-mode .light-particles, .dark-mode .light-streak { opacity: 0; }
         .theme-switching::after { animation: themeSwitchFlash 0.65s ease; }
-
-        @keyframes themeSwitchFlash {
-            0% { opacity: 0.3; filter: blur(5px); }
-            50% { opacity: 1; filter: blur(0); }
-            100% { opacity: 0.95; filter: blur(4px); }
-        }
+        @keyframes themeSwitchFlash { 0% { opacity: 0.3; filter: blur(5px); } 50% { opacity: 1; filter: blur(0); } 100% { opacity: 0.95; filter: blur(4px); } }
 
         @media (prefers-reduced-motion: reduce) {
-            body::before,
-            body::after,
-            .bg-particles,
-            .bg-particle,
-            .light-particles,
-            .light-particle,
-            .light-streak { animation: none !important; }
+            body::before, body::after, .bg-particles, .bg-particle, .light-particles, .light-particle, .light-streak { animation: none !important; }
         }
-
     </style>
 </head>
 
 <body>
-    <!-- Animated background: khusus mode terang -->
     <div class="light-particles" aria-hidden="true">
         <span class="light-particle"></span><span class="light-particle"></span><span class="light-particle"></span><span class="light-particle"></span>
         <span class="light-particle"></span><span class="light-particle"></span><span class="light-particle"></span><span class="light-particle"></span>
     </div>
     <div class="light-streak" aria-hidden="true"></div>
 
-    <!-- Animated background particles: khusus mode gelap -->
     <div class="bg-particles" aria-hidden="true">
         <span class="bg-particle"></span><span class="bg-particle"></span><span class="bg-particle"></span><span class="bg-particle"></span>
         <span class="bg-particle"></span><span class="bg-particle"></span><span class="bg-particle"></span><span class="bg-particle"></span>
     </div>
 
-
-    <!-- ========================================================== -->
-    <!-- OVERLAY LOADING DINOSAURUS SAAT HALAMAN DIREFRESH          -->
-    <!-- ========================================================== -->
+    <!-- PAGE REFRESH LOADER -->
     <div id="pageLoader">
         <div class="dino-container">
-            <div class="dino-icon">
-                <i class="fas fa-dragon"></i>
-            </div>
+            <div class="dino-icon"><i class="fas fa-dragon"></i></div>
             <h3 class="fw-bold mb-1">Sabar...</h3>
             <p class="text-muted mb-0" style="font-size: 0.95rem;">Sedang memuat portofolio</p>
         </div>
@@ -652,12 +557,17 @@
             <div class="col-lg-6 order-2 order-lg-1 mt-5 mt-lg-0">
                 <h4 class="mb-2" style="color: var(--primary);">Hello! I am</h4>
                 <h1 class="hero-title mb-3">Nouval Lazuardy</h1>
-                <h5 class="mb-4" style="font-weight: 500; color: var(--text-muted); line-height: 1.6;">
-                    Bachelor's Degree in Information Systems | Web Developer | UI/UX Design | Desain Grafis & Editing Video
-                </h5>
-                <div class="d-flex gap-3">
+                
+                <div class="hero-subtitle-wrapper">
+                    <h5 class="mb-4" style="font-weight: 500; color: var(--text-muted); line-height: 1.6;">
+                        <span id="typedText"></span><span class="cursor"></span>
+                    </h5>
+                </div>
+
+                <div class="d-flex flex-wrap gap-3 mt-3">
                     <a href="tel:+6283119036831" class="btn-modern">Contact Me</a>
                     <a href="#project" class="btn-outline-modern">View Work</a>
+                    <a id="openGameModal" class="btn-outline-modern" style="border-color: var(--primary); color: var(--primary);"><i class="fas fa-gamepad me-2"></i>Main Game Yuk!!</a>
                 </div>
             </div>
             <div class="col-lg-6 order-1 order-lg-2">
@@ -1018,7 +928,7 @@
         </div>
     </section>
 
-    <!-- 8. STANDBY FOOTER (DENGAN HARI & JAM REALTIME) -->
+    <!-- 8. STANDBY FOOTER -->
     <div class="standby-footer">
         <i class="fas fa-copyright"></i>
         <span><a href="https://www.instagram.com/nouval23_?igsh=MTl1ODVha3oyNHR2OA==" target="_blank" style="color:inherit; text-decoration:none;">Nouval Lazuardy</a>, 2026.</span>
@@ -1036,7 +946,37 @@
     </div>
 
     <!-- ========================================================== -->
-    <!-- TEMPLATE MODAL (POP-UP)                                    -->
+    <!-- MODAL MINI GAME DINOSAURUS BAGUS                           -->
+    <!-- ========================================================== -->
+    <div class="modal fade" id="modalDinoGame" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content text-center">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold"><i class="fas fa-dragon text-primary me-2"></i>Gabut Mini Game</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted mb-3" style="font-size: 0.9rem;">Tekan tombol <kbd>Spasi</kbd> atau <kbd>Klik Layar</kbd> untuk melompati rintangan kaktus!</p>
+                    
+                    <div class="mb-3 position-relative">
+                        <canvas id="dinoGameCanvas" width="600" height="200"></canvas>
+                    </div>
+
+                    <div class="d-flex justify-content-around align-items-center fw-bold fs-5">
+                        <div>Score: <span id="dinoScore" class="text-primary">0</span></div>
+                        <div>High Score: <span id="dinoHighScore" class="text-success">0</span></div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" id="startDinoBtn" class="btn-modern px-4 py-2">Mulai / Main Lagi</button>
+                    <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================================== -->
+    <!-- TEMPLATE MODAL PROJECT LAINNYA                             -->
     <!-- ========================================================== -->
     
     <!-- Modal App Penilaian Kinerja Mahasiswa (Project 10) -->
@@ -1593,16 +1533,48 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        
+        // EFEK LOOPING 
+        const typedTextSpan = document.getElementById("typedText");
+        const fullTextToType = "Bachelor's Degree in Information Systems | Web Developer | UI/UX Design | Desain Grafis & Editing Video";
+        
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function continuousFullTypewriter() {
+            if (isDeleting) {
+                typedTextSpan.textContent = fullTextToType.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typedTextSpan.textContent = fullTextToType.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 25 : 55;
+
+            if (!isDeleting && charIndex === fullTextToType.length) {
+                typeSpeed = 3000; 
+                isDeleting = true;
+            } 
+            else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                typeSpeed = 800; 
+            }
+
+            setTimeout(continuousFullTypewriter, typeSpeed);
+        }
+
         // LOADING HALAMAN (RELOAD / REFRESH)
         window.addEventListener('load', function() {
             const pageLoader = document.getElementById('pageLoader');
             setTimeout(() => {
                 pageLoader.style.opacity = '0';
                 pageLoader.style.visibility = 'hidden';
+                setTimeout(continuousFullTypewriter, 300);
             }, 600);
         });
 
-        // DARK MODE
+        // DARK MODE 
         const darkModeBtn = document.getElementById('darkModeBtn');
         const darkModeIcon = document.getElementById('darkModeIcon');
         
@@ -1635,15 +1607,11 @@
             window.open(url, '_blank');
         }
 
-        // HARI & JAM REALTIME (Footer)
+        // HARI & JAM 
         function updateDateTime() {
             const now = new Date();
-            
-            // Format Hari & Tanggal 
             const options = { weekday: 'long', day: 'numeric', month: 'short', year: 'numeric' };
             const dateString = now.toLocaleDateString('id-ID', options);
-            
-            // Format Jam 
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const timeString = `${hours}:${minutes} WIB`;
@@ -1669,6 +1637,200 @@
                 }, 800);
             });
         });
+
+        // ========================================================== //
+        // MINI GAME DINOSAURUS //
+        // ========================================================== //
+        const openGameModalBtn = document.getElementById('openGameModal');
+        const startDinoBtn = document.getElementById('startDinoBtn');
+        const canvas = document.getElementById('dinoGameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreSpan = document.getElementById('dinoScore');
+        const highScoreSpan = document.getElementById('dinoHighScore');
+
+        let dinoGameModal;
+        openGameModalBtn.addEventListener('click', () => {
+            dinoGameModal = new bootstrap.Modal(document.getElementById('modalDinoGame'));
+            dinoGameModal.show();
+            setTimeout(resetDinoGame, 300);
+        });
+
+        let dino = { x: 50, y: 125, width: 32, height: 35, vy: 0, gravity: 0.55, jumpPower: -9.5, grounded: true };
+        let obstacles = [];
+        let score = 0;
+        let highScore = 0;
+        let gameInterval = null;
+        let isGameOver = false;
+        let frameCount = 0;
+
+        function resetDinoGame() {
+            dino.y = 125;
+            dino.vy = 0;
+            dino.grounded = true;
+            obstacles = [];
+            score = 0;
+            frameCount = 0;
+            isGameOver = false;
+            scoreSpan.innerText = score;
+            if(gameInterval) clearInterval(gameInterval);
+            gameInterval = setInterval(updateDinoGame, 1000 / 60);
+        }
+
+        startDinoBtn.addEventListener('click', resetDinoGame);
+        canvas.addEventListener('click', () => {
+            if (isGameOver) {
+                resetDinoGame();
+            } else if (dino.grounded) {
+                dino.vy = dino.jumpPower;
+                dino.grounded = false;
+            }
+        });
+
+        window.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' && document.getElementById('modalDinoGame').classList.contains('show')) {
+                e.preventDefault();
+                if (isGameOver) {
+                    resetDinoGame();
+                } else if (dino.grounded) {
+                    dino.vy = dino.jumpPower;
+                    dino.grounded = false;
+                }
+            }
+        });
+
+        function updateDinoGame() {
+            if (isGameOver) return;
+            frameCount++;
+
+            // Fisika Dinosaurus
+            dino.vy += dino.gravity;
+            dino.y += dino.vy;
+            if (dino.y >= 125) {
+                dino.y = 125;
+                dino.vy = 0;
+                dino.grounded = true;
+            }
+
+            // Spawn Rintangan
+            if (frameCount % 100 === 0) {
+                let obsWidth = 18;
+                let obsHeight = Math.floor(Math.random() * 20) + 25;
+                obstacles.push({ x: canvas.width, y: 160 - obsHeight, width: obsWidth, height: obsHeight });
+            }
+
+            // Gerakkan Rintangan
+            for (let i = obstacles.length - 1; i >= 0; i--) {
+                obstacles[i].x -= 4.5;
+
+                // Deteksi Tabrakan Presisi
+                if (
+                    dino.x + 4 < obstacles[i].x + obstacles[i].width &&
+                    dino.x + dino.width - 4 > obstacles[i].x &&
+                    dino.y < obstacles[i].y + obstacles[i].height &&
+                    dino.y + dino.height > obstacles[i].y
+                ) {
+                    isGameOver = true;
+                    clearInterval(gameInterval);
+                    if (score > highScore) {
+                        highScore = score;
+                        highScoreSpan.innerText = highScore;
+                    }
+                }
+
+                if (obstacles[i].x + obstacles[i].width < 0) {
+                    obstacles.splice(i, 1);
+                    score += 10;
+                    scoreSpan.innerText = score;
+                }
+            }
+
+            drawDinoGame();
+        }
+
+        function drawDinoGame() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Garis Tanah & Tekstur
+            const isDark = document.body.classList.contains('dark-mode');
+            ctx.strokeStyle = isDark ? '#64748b' : '#475569';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.moveTo(0, 160);
+            ctx.lineTo(canvas.width, 160);
+            ctx.stroke();
+
+            // DINOSAURUS
+            const dinoColor = isDark ? '#3b82f6' : '#004aad';
+            ctx.fillStyle = dinoColor;
+
+            // Badan Dino
+            ctx.beginPath();
+            ctx.roundRect(dino.x + 6, dino.y + 12, 20, 18, 4);
+            ctx.fill();
+
+            // Kepala Dino
+            ctx.beginPath();
+            ctx.roundRect(dino.x + 16, dino.y, 15, 14, 3);
+            ctx.fill();
+
+            // Mata Dino
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(dino.x + 24, dino.y + 3, 3, 3);
+
+            // Ekor Dino
+            ctx.fillStyle = dinoColor;
+            ctx.beginPath();
+            ctx.moveTo(dino.x + 6, dino.y + 16);
+            ctx.lineTo(dino.x, dino.y + 12);
+            ctx.lineTo(dino.x + 4, dino.y + 22);
+            ctx.fill();
+
+            // Kaki Dino
+            if (dino.grounded) {
+                if (Math.floor(frameCount / 8) % 2 === 0) {
+                    ctx.fillRect(dino.x + 8, dino.y + 30, 4, 6);
+                    ctx.fillRect(dino.x + 18, dino.y + 30, 4, 5);
+                } else {
+                    ctx.fillRect(dino.x + 8, dino.y + 30, 4, 5);
+                    ctx.fillRect(dino.x + 18, dino.y + 30, 4, 6);
+                }
+            } else {
+                // Posisi kaki saat melompat
+                ctx.fillRect(dino.x + 8, dino.y + 29, 4, 5);
+                ctx.fillRect(dino.x + 18, dino.y + 29, 4, 5);
+            }
+
+            // RINTANGAN KAKTUS
+            ctx.fillStyle = '#10b981';
+            obstacles.forEach(obs => {
+                // Batang Utama Kaktus
+                ctx.beginPath();
+                ctx.roundRect(obs.x + 4, obs.y, obs.width - 8, obs.height, 4);
+                ctx.fill();
+                // Cabang Kaktus Kiri
+                ctx.fillRect(obs.x, obs.y + 8, 4, 8);
+                ctx.fillRect(obs.x, obs.y + 8, 8, 3);
+                // Cabang Kaktus Kanan
+                ctx.fillRect(obs.x + obs.width - 4, obs.y + 14, 4, 8);
+                ctx.fillRect(obs.x + obs.width - 8, obs.y + 14, 8, 3);
+            });
+
+            // Teks Game Over
+            if (isGameOver) {
+                ctx.fillStyle = isDark ? 'rgba(15, 23, 42, 0.85)' : 'rgba(255, 255, 255, 0.85)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.fillStyle = isDark ? '#f8fafc' : '#0f172a';
+                ctx.font = 'bold 22px "Plus Jakarta Sans", sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('GAME OVER!', canvas.width / 2, canvas.height / 2 - 10);
+                
+                ctx.font = '14px "Plus Jakarta Sans", sans-serif';
+                ctx.fillStyle = isDark ? '#94a3b8' : '#64748b';
+                ctx.fillText('Tekan Spasi atau Klik untuk Main Lagi', canvas.width / 2, canvas.height / 2 + 18);
+                ctx.textAlign = 'left';
+            }
+        }
     </script>
 </body>
 
